@@ -1,0 +1,14 @@
+package com.example.danceSchool.service;
+
+import com.example.danceSchool.dto.DanceDto;
+import com.example.danceSchool.dto.GroupDto;
+
+import java.util.List;
+
+public interface GroupService {
+    GroupDto findGroupById(Long id);
+    GroupDto createGroup (GroupDto groupDto);
+    GroupDto updateGroup (GroupDto groupDto);
+    void deleteGroup (Long id);
+    public List<GroupDto> getAll();
+}
