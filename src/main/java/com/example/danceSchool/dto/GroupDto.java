@@ -6,14 +6,13 @@ import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.List;
 
-public class GroupDto implements Serializable {
-    @JsonProperty(value = "id")
-    private Long id;
+public class GroupDto extends baseDto{
     @JsonProperty(value = "group_level")
     private Integer groupLevel;
+    @JsonProperty(value = "teacher")
     private TeacherDto teacher;
+    @JsonProperty(value = "dance")
     private DanceDto dance;
-    private List<ClientDto> clients;
 
     public int getGroupLevel() {
         return groupLevel;
@@ -21,14 +20,6 @@ public class GroupDto implements Serializable {
 
     public void setGroupLevel(int groupLevel) {
         this.groupLevel = groupLevel;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public TeacherDto getTeacher() {

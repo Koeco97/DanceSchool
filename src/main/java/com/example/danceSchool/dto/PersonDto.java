@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class PersonDto implements Serializable {
-    @JsonProperty(value = "id")
-    private Long id;
+public class PersonDto extends baseDto {
     @JsonProperty(value = "first_name")
     private String firstName;
     @JsonProperty (value = "second_name")
@@ -99,11 +97,4 @@ public class PersonDto implements Serializable {
         this.password = password;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

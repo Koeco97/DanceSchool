@@ -6,11 +6,10 @@ import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LessonDto implements Serializable {
-    @JsonProperty(value = "id")
-    private Long id;
+public class LessonDto extends baseDto{
     @JsonProperty(value = "date")
     private Date date;
+    @JsonProperty(value = "group")
     private GroupDto group;
     @JsonProperty(value = "comment")
     private String comment;
@@ -31,11 +30,11 @@ public class LessonDto implements Serializable {
         this.comment = comment;
     }
 
-    public long getId() {
-        return id;
+    public GroupDto getGroup() {
+        return group;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setGroup(GroupDto group) {
+        this.group = group;
     }
 }
