@@ -1,11 +1,10 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
-import com.example.danceSchool.dto.LessonDto;
 import com.example.danceSchool.dto.PersonDto;
-import com.example.danceSchool.entity.Lesson;
 import com.example.danceSchool.entity.Person;
 import com.example.danceSchool.exception.PersonException;
 import com.example.danceSchool.repository.PersonRepository;
+import com.example.danceSchool.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class PersonServiceImpl implements PersonService{
+public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
     private final ConversionService conversionService;
 
@@ -45,7 +44,7 @@ public class PersonServiceImpl implements PersonService{
         person.setLastName(personDto.getLastName());
         person.setBirthday(personDto.getBirthday());
         person.setSex(personDto.getSex());
-        person.setE_mail(personDto.getE_mail());
+        person.setE_mail(personDto.getEmail());
         person.setPhoneNumber(personDto.getPhoneNumber());
         person.setLogin(personDto.getLogin());
         person.setPassword(personDto.getPassword());

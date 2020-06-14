@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/client")
+@RequestMapping(value = "/clients")
 public class ClientController {
     private final ClientService clientService;
 
@@ -22,8 +22,8 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-    @GetMapping(value = "/(id)")
-    public ClientDto findClientById(@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public ClientDto findClientById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return clientService.findClientById(id);
     }
     @GetMapping
@@ -35,7 +35,7 @@ public class ClientController {
         return clientService.getAll().stream().collect(Collectors.toMap(ClientDto::getId, Function.identity()));
     }
     @PostMapping
-    public ClientDto createClient (ClientDto clientDto){
+    public ClientDto createClient (@RequestBody ClientDto clientDto){
         return clientService.createClient(clientDto);
     }
     @PutMapping

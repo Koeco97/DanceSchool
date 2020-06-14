@@ -2,7 +2,6 @@ package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,7 +19,7 @@ public class PersonDto implements Serializable {
     @JsonProperty (value = "sex")
     private String sex;
     @JsonProperty (value = "e_mail")
-    private String e_mail;
+    private String email;
     @JsonProperty (value = "phone_number")
     private String phoneNumber;
     @JsonProperty (value = "login")
@@ -68,12 +67,12 @@ public class PersonDto implements Serializable {
         this.sex = sex;
     }
 
-    public String getE_mail() {
-        return e_mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {

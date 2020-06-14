@@ -1,4 +1,4 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.LessonDto;
 import com.example.danceSchool.dto.TeacherDto;
@@ -6,6 +6,7 @@ import com.example.danceSchool.entity.Lesson;
 import com.example.danceSchool.entity.Teacher;
 import com.example.danceSchool.exception.TeacherException;
 import com.example.danceSchool.repository.TeacherRepository;
+import com.example.danceSchool.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class TeacherServiceImpl implements TeacherService{
+public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final ConversionService conversionService;
 
@@ -41,7 +42,6 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
         Teacher teacher = teacherRepository.findById(teacherDto.getId()).orElseThrow(()->new TeacherException("Teacher is not found"));
-        teacher.setPersonId(teacherDto.getPersonId());
         return conversionService.convert(teacherRepository.save(teacher), TeacherDto.class);
     }
 

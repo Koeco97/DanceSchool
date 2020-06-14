@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/group")
+@RequestMapping(value = "/groups")
 public class GroupController {
     private final GroupService groupService;
 
@@ -23,8 +23,8 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @GetMapping(value = "/(id)")
-    public GroupDto findGroupById(@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public GroupDto findGroupById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return groupService.findGroupById(id);
     }
     @GetMapping
@@ -36,7 +36,7 @@ public class GroupController {
         return groupService.getAll().stream().collect(Collectors.toMap(GroupDto::getId, Function.identity()));
     }
     @PostMapping
-    public GroupDto createGroup (GroupDto groupDto){
+    public GroupDto createGroup (@RequestBody GroupDto groupDto){
         return groupService.createGroup(groupDto);
     }
     @PutMapping

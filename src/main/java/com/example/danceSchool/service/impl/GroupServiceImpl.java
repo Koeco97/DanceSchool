@@ -1,4 +1,4 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.DanceDto;
 import com.example.danceSchool.dto.GroupDto;
@@ -6,6 +6,7 @@ import com.example.danceSchool.entity.Dance;
 import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.exception.GroupException;
 import com.example.danceSchool.repository.GroupRepository;
+import com.example.danceSchool.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class GroupServiceImpl implements GroupService{
+public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final ConversionService conversionService;
 
@@ -42,8 +43,8 @@ public class GroupServiceImpl implements GroupService{
     public GroupDto updateGroup(GroupDto groupDto) {
         Group group = groupRepository.findById(groupDto.getId()).orElseThrow(()->new GroupException("Group is not found"));
         group.setGroupLevel(groupDto.getGroupLevel());
-        group.setDanceId(groupDto.getDanceId());
-        group.setTeacherId(groupDto.getTeacherId());
+        group.setDanceId(groupDto.getDance().getId());
+        group.setTeacherId(groupDto.getTeacher().getId());
         return conversionService.convert(groupRepository.save(group), GroupDto.class);
     }
 

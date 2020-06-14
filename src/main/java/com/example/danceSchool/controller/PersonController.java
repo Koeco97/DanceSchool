@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/person")
+@RequestMapping(value = "/persons")
 public class PersonController {
     private final PersonService personService;
 
@@ -23,8 +23,8 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping(value = "/(id)")
-    public PersonDto getPersonById (@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public PersonDto getPersonById (@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return personService.getPersonById(id);
     }
     @GetMapping

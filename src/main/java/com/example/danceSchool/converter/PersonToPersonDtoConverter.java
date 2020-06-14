@@ -16,7 +16,7 @@ public class PersonToPersonDtoConverter implements Converter <Person, PersonDto>
         target.setLastName(person.getLastName());
         target.setBirthday(person.getBirthday());
         target.setSex(person.getSex());
-        target.setE_mail(person.getE_mail());
+        target.setEmail(person.getE_mail());
         target.setPhoneNumber(person.getPhoneNumber());
         target.setLogin(person.getLogin());
         target.setPassword(person.getPassword());

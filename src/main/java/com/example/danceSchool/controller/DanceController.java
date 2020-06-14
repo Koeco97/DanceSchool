@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/dance")
+@RequestMapping(value = "/dances")
 public class DanceController {
     private final DanceService danceService;
 
@@ -23,8 +23,8 @@ public class DanceController {
         this.danceService = danceService;
     }
 
-    @GetMapping(value = "/(id)")
-    public DanceDto findDanceById(@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public DanceDto findDanceById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return danceService.findDanceById(id);
     }
     @GetMapping
@@ -36,7 +36,7 @@ public class DanceController {
         return danceService.getAll().stream().collect(Collectors.toMap(DanceDto::getId, Function.identity()));
     }
     @PostMapping
-    public DanceDto createDance(DanceDto danceDto){
+    public DanceDto createDance(@RequestBody DanceDto danceDto){
         return danceService.createDance(danceDto);
     }
     @PutMapping

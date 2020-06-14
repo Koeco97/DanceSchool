@@ -1,4 +1,4 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.dto.LessonDto;
@@ -6,6 +6,7 @@ import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.entity.Lesson;
 import com.example.danceSchool.exception.LessonException;
 import com.example.danceSchool.repository.LessonRepository;
+import com.example.danceSchool.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class LessonServiceImpl implements LessonService{
+public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
     private final ConversionService conversionService;
 
@@ -42,7 +43,6 @@ public class LessonServiceImpl implements LessonService{
     public LessonDto updateLesson(LessonDto lessonDto) {
         Lesson lesson = lessonRepository.findById(lessonDto.getId()).orElseThrow(()->new LessonException("Lesson is not found"));
         lesson.setDate(lessonDto.getDate());
-        lesson.setGroup_id(lessonDto.getGroup_id());
         lesson.setComment(lessonDto.getComment());
         return conversionService.convert(lessonRepository.save(lesson),LessonDto.class);
     }

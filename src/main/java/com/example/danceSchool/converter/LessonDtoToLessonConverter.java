@@ -12,7 +12,6 @@ public class LessonDtoToLessonConverter implements Converter<LessonDto, Lesson> 
     public Lesson convert(LessonDto lessonDto) {
         Lesson target = new Lesson();
         target.setDate(lessonDto.getDate());
-        target.setGroup_id(lessonDto.getGroup_id());
         target.setComment(lessonDto.getComment());
         return target;
     }

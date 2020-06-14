@@ -12,8 +12,8 @@ public class GroupDtoToGroupConverter implements Converter<GroupDto, Group> {
     public Group convert(GroupDto groupDto) {
         Group target = new Group();
         target.setGroupLevel(groupDto.getGroupLevel());
-        target.setDanceId(groupDto.getDanceId());
-        target.setTeacherId(groupDto.getTeacherId());
+        target.setDanceId(groupDto.getDance().getId());
+        target.setTeacherId(groupDto.getTeacher().getId());
         return target;
     }
 }

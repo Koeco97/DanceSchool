@@ -12,7 +12,6 @@ public class TeacherDtoToTeacherConverter implements Converter<TeacherDto, Teach
     @Override
     public Teacher convert(TeacherDto teacherDto) {
         Teacher target = new Teacher();
-        target.setPersonId(teacherDto.getPersonId());
         return target;
     }
 }

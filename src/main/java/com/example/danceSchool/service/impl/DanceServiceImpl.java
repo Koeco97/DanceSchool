@@ -1,4 +1,4 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.dto.DanceDto;
@@ -6,6 +6,7 @@ import com.example.danceSchool.entity.Client;
 import com.example.danceSchool.entity.Dance;
 import com.example.danceSchool.exception.DanceException;
 import com.example.danceSchool.repository.DanceRepository;
+import com.example.danceSchool.service.DanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class DanceServiceImpl implements DanceService{
+public class DanceServiceImpl implements DanceService {
     private final DanceRepository danceRepository;
     private final ConversionService conversionService;
 

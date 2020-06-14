@@ -1,9 +1,10 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.entity.Client;
 import com.example.danceSchool.exception.ClientException;
 import com.example.danceSchool.repository.ClientRepository;
+import com.example.danceSchool.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ConversionService conversionService;
 
@@ -39,8 +40,6 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public ClientDto updateClient(ClientDto clientDto) {
         Client client = clientRepository.findById(clientDto.getId()).orElseThrow(()->new ClientException("Client is not found"));
-        client.setPersonId(clientDto.getPersonId());
-        client.setGroupId(clientDto.getGroupId());
         return conversionService.convert(clientRepository.save(client), ClientDto.class);
     }
 

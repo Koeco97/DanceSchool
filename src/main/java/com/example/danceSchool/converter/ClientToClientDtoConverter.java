@@ -12,8 +12,6 @@ public class ClientToClientDtoConverter implements Converter<Client, ClientDto> 
     public ClientDto convert(Client client) {
         ClientDto target = new ClientDto();
         target.setId(client.getId());
-        target.setPersonId(client.getPersonId());
-        target.setGroupId(client.getGroupId());
         return target;
     }
 }

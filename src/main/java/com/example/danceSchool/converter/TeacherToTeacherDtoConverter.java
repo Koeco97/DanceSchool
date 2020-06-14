@@ -11,7 +11,6 @@ public class TeacherToTeacherDtoConverter implements Converter<Teacher, TeacherD
     public TeacherDto convert(Teacher teacher) {
         TeacherDto target = new TeacherDto();
         target.setId(teacher.getId());
-        target.setPersonId(teacher.getPersonId());
         return target;
     }
 }

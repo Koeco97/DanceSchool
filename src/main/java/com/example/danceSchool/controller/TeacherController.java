@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/teacher")
+@RequestMapping(value = "/teachers")
 public class TeacherController {
     private final TeacherService teacherService;
 
@@ -23,8 +23,8 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
-    @GetMapping(value = "/(id)")
-    public TeacherDto findTeacherById (@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public TeacherDto findTeacherById (@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return teacherService.findTeacherById(id);
     }
     @GetMapping
@@ -36,7 +36,7 @@ public class TeacherController {
         return teacherService.getAll().stream().collect(Collectors.toMap(TeacherDto::getId, Function.identity()));
     }
     @PostMapping
-    public TeacherDto createTeacher (TeacherDto teacherDto){
+    public TeacherDto createTeacher (@RequestBody TeacherDto teacherDto){
         return teacherService.createTeacher(teacherDto);
     }
     @PutMapping

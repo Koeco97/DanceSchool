@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/lesson")
+@RequestMapping(value = "/lessons")
 public class LessonController {
     private final LessonService lessonService;
 
@@ -23,8 +23,8 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @GetMapping(value = "/(id)")
-    public LessonDto getLessonById(@PathParam("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    @GetMapping(value = "/{id}")
+    public LessonDto getLessonById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
         return lessonService.getLessonById(id);
     }
     @GetMapping
@@ -36,7 +36,7 @@ public class LessonController {
         return lessonService.getAll().stream().collect(Collectors.toMap(LessonDto::getId, Function.identity()));
     }
     @PostMapping
-    public LessonDto createLesson(LessonDto lessonDto){
+    public LessonDto createLesson(@RequestBody LessonDto lessonDto){
         return lessonService.createLesson(lessonDto);
     }
     @PutMapping

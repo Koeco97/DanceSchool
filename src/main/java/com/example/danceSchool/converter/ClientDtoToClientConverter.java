@@ -6,13 +6,12 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClientDtotoClientConverter implements Converter<ClientDto, Client> {
+public class ClientDtoToClientConverter implements Converter<ClientDto, Client> {
 
     @Override
     public Client convert(ClientDto clientDto) {
         Client target = new Client();
-        target.setPersonId(clientDto.getPersonId());
-        target.setGroupId(clientDto.getGroupId());
+        target.setGroupId(clientDto.getGroup().getId());
         return target;
     }
 }

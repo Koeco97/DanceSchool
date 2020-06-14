@@ -11,8 +11,7 @@ public class LessonDto implements Serializable {
     private Long id;
     @JsonProperty(value = "date")
     private Date date;
-    @JsonProperty(value = "group_id")
-    private Long group_id;
+    private GroupDto group;
     @JsonProperty(value = "comment")
     private String comment;
 
@@ -22,14 +21,6 @@ public class LessonDto implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Long getGroup_id() {
-        return group_id;
-    }
-
-    public void setGroup_id(Long group_id) {
-        this.group_id = group_id;
     }
 
     public String getComment() {
