@@ -4,7 +4,15 @@ import com.example.danceSchool.dto.PersonDto;
 import com.example.danceSchool.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -33,16 +41,19 @@ public class PersonController {
     public Map<Long, PersonDto> getMap(){
         return personService.getAll().stream().collect(Collectors.toMap(PersonDto::getId, Function.identity()));
     }
+
     @PostMapping()
-    public PersonDto createPerson (@RequestBody PersonDto personDto){
+    public PersonDto createPerson(@RequestBody PersonDto personDto) {
         return personService.createPerson(personDto);
     }
+
     @PutMapping()
-    public PersonDto updatePerson (PersonDto personDto){
+    public PersonDto updatePerson(@RequestBody PersonDto personDto) {
         return personService.updatePerson(personDto);
     }
-    @DeleteMapping
-    public void deletePerson (Long id) {
+
+    @DeleteMapping(value = "/{id}")
+    public void deletePerson(@PathVariable("id") Long id) {
         personService.deletePerson(id);
     }
 }

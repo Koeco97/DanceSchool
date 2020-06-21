@@ -40,6 +40,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonDto updatePerson(PersonDto personDto) {
         Person person = personRepository.findById(personDto.getId()).orElseThrow(()->new PersonException("Person is not found"));
+        System.out.println(personDto.getId());
         person.setSecondName(personDto.getSecondName());
         person.setLastName(personDto.getLastName());
         person.setBirthday(personDto.getBirthday());
