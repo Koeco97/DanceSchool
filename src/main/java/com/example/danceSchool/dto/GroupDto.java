@@ -2,8 +2,6 @@ package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import java.io.Serializable;
 import java.util.List;
 
 public class GroupDto extends baseDto{
@@ -13,6 +11,10 @@ public class GroupDto extends baseDto{
     private TeacherDto teacher;
     @JsonProperty(value = "dance")
     private DanceDto dance;
+    @JsonProperty(value = "clients")
+    private List<ClientDto> clients;
+    @JsonProperty(value = "lessons")
+    private List<LessonDto> lessons;
 
     public int getGroupLevel() {
         return groupLevel;
@@ -36,5 +38,22 @@ public class GroupDto extends baseDto{
 
     public void setDance(DanceDto dance) {
         this.dance = dance;
+    }
+
+
+    public List<ClientDto> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<ClientDto> clients) {
+        this.clients = clients;
+    }
+
+    public List<LessonDto> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<LessonDto> lessons) {
+        this.lessons = lessons;
     }
 }

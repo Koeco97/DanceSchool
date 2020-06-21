@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "first_name": "Иван",
+    "second_name": "Иванов",
+    "last_name": "Иванович",
+    "birthday": "01.01.1991",
+    "sex": "м",
+    "e_mail": "ivanov@yandex.ru",
+    "phone_number": "777-777-77-77",
+    "login": "Ivan",
+    "password": "123"
+}

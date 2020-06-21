@@ -2,6 +2,7 @@ package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.entity.Client;
+import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.exception.ClientException;
 import com.example.danceSchool.repository.ClientRepository;
 import com.example.danceSchool.service.ClientService;
@@ -40,6 +41,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDto updateClient(ClientDto clientDto) {
         Client client = clientRepository.findById(clientDto.getId()).orElseThrow(()->new ClientException("Client is not found"));
+        client.setFirstName(clientDto.getFirstName());
+        client.setSecondName(clientDto.getSecondName());
+        client.setLastName(clientDto.getLastName());
+        client.setBirthday(clientDto.getBirthday());
+        client.setSex(clientDto.getSex());
+        client.setEmail(clientDto.getEmail());
+        client.setPhoneNumber(clientDto.getPhoneNumber());
+        client.setLogin(clientDto.getLogin());
+        client.setPassword(clientDto.getPassword());
+        client.setGroup(conversionService.convert(clientDto.getGroup(), Group.class));
         return conversionService.convert(clientRepository.save(client), ClientDto.class);
     }
 

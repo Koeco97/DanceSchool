@@ -1,8 +1,8 @@
 package com.example.danceSchool.service.impl;
 
-import com.example.danceSchool.dto.LessonDto;
+import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.dto.TeacherDto;
-import com.example.danceSchool.entity.Lesson;
+import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.entity.Teacher;
 import com.example.danceSchool.exception.TeacherException;
 import com.example.danceSchool.repository.TeacherRepository;
@@ -12,6 +12,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,20 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
         Teacher teacher = teacherRepository.findById(teacherDto.getId()).orElseThrow(()->new TeacherException("Teacher is not found"));
+        teacher.setFirstName(teacherDto.getFirstName());
+        teacher.setSecondName(teacherDto.getSecondName());
+        teacher.setLastName(teacherDto.getLastName());
+        teacher.setBirthday(teacherDto.getBirthday());
+        teacher.setSex(teacherDto.getSex());
+        teacher.setEmail(teacherDto.getEmail());
+        teacher.setPhoneNumber(teacherDto.getPhoneNumber());
+        teacher.setLogin(teacherDto.getLogin());
+        teacher.setPassword(teacherDto.getPassword());
+        List<Group> groups = new ArrayList<>();
+        for (GroupDto groupDto : teacherDto.getGroups()) {
+            groups.add(conversionService.convert(groupDto, Group.class));
+        }
+        teacher.setGroups(groups);
         return conversionService.convert(teacherRepository.save(teacher), TeacherDto.class);
     }
 

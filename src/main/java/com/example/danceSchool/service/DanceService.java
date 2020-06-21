@@ -1,6 +1,5 @@
 package com.example.danceSchool.service;
 
-import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.dto.DanceDto;
 
 import java.util.List;

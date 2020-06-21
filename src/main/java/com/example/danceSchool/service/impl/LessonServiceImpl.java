@@ -1,6 +1,5 @@
 package com.example.danceSchool.service.impl;
 
-import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.dto.LessonDto;
 import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.entity.Lesson;
@@ -44,6 +43,7 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonRepository.findById(lessonDto.getId()).orElseThrow(()->new LessonException("Lesson is not found"));
         lesson.setDate(lessonDto.getDate());
         lesson.setComment(lessonDto.getComment());
+        lesson.setGroup(conversionService.convert(lessonDto.getGroup(), Group.class));
         return conversionService.convert(lessonRepository.save(lesson),LessonDto.class);
     }
 

@@ -1,9 +1,9 @@
 package com.example.danceSchool.service.impl;
 
-import com.example.danceSchool.dto.DanceDto;
+import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.dto.GroupDto;
-import com.example.danceSchool.entity.Dance;
-import com.example.danceSchool.entity.Group;
+import com.example.danceSchool.dto.LessonDto;
+import com.example.danceSchool.entity.*;
 import com.example.danceSchool.exception.GroupException;
 import com.example.danceSchool.repository.GroupRepository;
 import com.example.danceSchool.service.GroupService;
@@ -12,6 +12,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,8 +44,18 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto updateGroup(GroupDto groupDto) {
         Group group = groupRepository.findById(groupDto.getId()).orElseThrow(()->new GroupException("Group is not found"));
         group.setGroupLevel(groupDto.getGroupLevel());
-        group.setDanceId(groupDto.getDance().getId());
-        group.setTeacherId(groupDto.getTeacher().getId());
+        group.setTeacher(conversionService.convert(groupDto.getTeacher(), Teacher.class));
+        group.setDance(conversionService.convert(groupDto.getDance(), Dance.class));
+        List<Client> clients = new ArrayList<>();
+        for (ClientDto clientDto : groupDto.getClients()) {
+            clients.add(conversionService.convert(clientDto, Client.class));
+        }
+        group.setClients(clients);
+        List<Lesson> lessons = new ArrayList<>();
+        for (LessonDto lessonDto : groupDto.getLessons()) {
+            lessons.add(conversionService.convert(lessonDto, Lesson.class));
+        }
+        group.setLessons(lessons);
         return conversionService.convert(groupRepository.save(group), GroupDto.class);
     }
 

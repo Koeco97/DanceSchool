@@ -1,8 +1,8 @@
 package com.example.danceSchool.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class PersonDto extends baseDto {
@@ -13,6 +13,7 @@ public class PersonDto extends baseDto {
     @JsonProperty (value = "last_name")
     private String lastName;
     @JsonProperty (value = "birthday")
+    @JsonFormat(pattern = "dd.MM.yyyy")
     private Date birthday;
     @JsonProperty (value = "sex")
     private String sex;

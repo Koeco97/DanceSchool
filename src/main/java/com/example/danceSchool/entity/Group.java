@@ -1,18 +1,23 @@
 package com.example.danceSchool.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "group")
 public class Group extends EntityBase{
     @Column(name = "group_level")
     private int groupLevel;
-    @Column(name = "teacher_id")
-    private Long teacherId;
-    @Column(name = "dance_id")
-    private Long danceId;
+    @ManyToOne
+    @JoinColumn(name="teacher_id")
+    private Teacher teacher;
+    @ManyToOne
+    @JoinColumn(name="dance_id")
+    private Dance dance;
+    @OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Client> clients;
+    @OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 
     public int getGroupLevel() {
         return groupLevel;
@@ -22,19 +27,35 @@ public class Group extends EntityBase{
         this.groupLevel = groupLevel;
     }
 
-    public Long getTeacherId() {
-        return teacherId;
+    public List<Client> getClients() {
+        return clients;
     }
 
-    public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 
-    public Long getDanceId() {
-        return danceId;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setDanceId(Long danceId) {
-        this.danceId = danceId;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Dance getDance() {
+        return dance;
+    }
+
+    public void setDance(Dance dance) {
+        this.dance = dance;
     }
 }

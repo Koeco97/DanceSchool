@@ -1,11 +1,10 @@
 package com.example.danceSchool.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "person")
 public class Person extends EntityBase {
     @Column (name = "first_name")
@@ -19,7 +18,7 @@ public class Person extends EntityBase {
     @Column (name = "sex")
     private String sex;
     @Column (name = "e_mail")
-    private String e_mail;
+    private String email;
     @Column (name = "phone_number")
     private String phoneNumber;
     @Column (name = "login")
@@ -67,14 +66,6 @@ public class Person extends EntityBase {
         this.sex = sex;
     }
 
-    public String getE_mail() {
-        return e_mail;
-    }
-
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -97,5 +88,13 @@ public class Person extends EntityBase {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
