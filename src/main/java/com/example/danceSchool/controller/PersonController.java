@@ -37,8 +37,9 @@ public class PersonController {
     public List<PersonDto> getAll(){
         return personService.getAll();
     }
+
     @GetMapping("/map")
-    public Map<Long, PersonDto> getMap(){
+    public Map<Long, PersonDto> getMap() {
         return personService.getAll().stream().collect(Collectors.toMap(PersonDto::getId, Function.identity()));
     }
 
@@ -47,9 +48,9 @@ public class PersonController {
         return personService.createPerson(personDto);
     }
 
-    @PutMapping()
-    public PersonDto updatePerson(@RequestBody PersonDto personDto) {
-        return personService.updatePerson(personDto);
+    @PutMapping(value = "/{id}")
+    public PersonDto updatePerson(@PathVariable("id") Long id, @RequestBody PersonDto personDto) {
+        return personService.updatePerson(personDto, id);
     }
 
     @DeleteMapping(value = "/{id}")

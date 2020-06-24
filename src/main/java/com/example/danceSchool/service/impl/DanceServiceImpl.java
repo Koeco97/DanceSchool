@@ -1,9 +1,7 @@
 package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.DanceDto;
-import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.entity.Dance;
-import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.exception.DanceException;
 import com.example.danceSchool.repository.DanceRepository;
 import com.example.danceSchool.service.DanceService;
@@ -12,7 +10,6 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,14 +38,9 @@ public class DanceServiceImpl implements DanceService {
     }
 
     @Override
-    public DanceDto updateDance(DanceDto danceDto) {
-        Dance dance = danceRepository.findById(danceDto.getId()).orElseThrow(()->new DanceException("Dance is not found"));
+    public DanceDto updateDance(DanceDto danceDto, Long id) {
+        Dance dance = danceRepository.findById(id).orElseThrow(() -> new DanceException("Dance is not found"));
         dance.setName(danceDto.getName());
-        List<Group> groups = new ArrayList<>();
-        for (GroupDto groupDto : danceDto.getGroups()) {
-            groups.add(conversionService.convert(groupDto, Group.class));
-        }
-        dance.setGroups(groups);
         return conversionService.convert(danceRepository.save(dance), DanceDto.class);
     }
 

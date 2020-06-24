@@ -1,16 +1,11 @@
 package com.example.danceSchool.converter;
 
-import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.dto.TeacherDto;
-import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class TeacherDtoToTeacherConverter implements Converter<TeacherDto, Teacher> {
@@ -33,11 +28,6 @@ public class TeacherDtoToTeacherConverter implements Converter<TeacherDto, Teach
         target.setPhoneNumber(teacherDto.getPhoneNumber());
         target.setLogin(teacherDto.getLogin());
         target.setPassword(teacherDto.getPassword());
-        List<Group> groups = new ArrayList<>();
-        for (GroupDto groupDto : teacherDto.getGroups()) {
-            groups.add(conversionService.convert(groupDto, Group.class));
-        }
-        target.setGroups(groups);
         return target;
     }
 }

@@ -1,5 +1,5 @@
+//POST person http://localhost:8080/demo/persons работает
 {
-    "id": 1,
     "first_name": "Иван",
     "second_name": "Иванов",
     "last_name": "Иванович",
@@ -10,3 +10,98 @@
     "login": "Ivan",
     "password": "123"
 }
+//GET person
+http://localhost:8080/demo/persons?id=1 работает
+//PUT person Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+http://localhost:8080/demo/persons?id=1
+{
+    "first_name": "Андрей"
+}
+//DELETE person Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' not supported]
+http://localhost:8080/demo/persons?id=1
+
+
+// POST dance http://localhost:8080/demo/dances работает
+{
+    "name": "lindy-hop"
+}
+//GET dance работает
+http://localhost:8080/demo/dances?id=1
+//PUT dance Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+http://localhost:8080/demo/dances?id=1
+{
+"name": "salsa"
+}
+//DELETE dance http://localhost:8080/demo/dances?id=1 Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' not supported]
+
+
+//POST teacher http://localhost:8080/demo/teachers работает
+{
+    "first_name": "Семен",
+    "second_name": "Семенов",
+    "last_name": "Семенович",
+    "birthday": "01.01.1991",
+    "sex": "м",
+    "e_mail": "Semenov@yandex.ru",
+    "phone_number": "777-777-77-77",
+    "login": "Ivan",
+    "password": "123"
+}
+//GET teacher http://localhost:8080/demo/teachers?id=8 работает
+//PUT teacher http://localhost:8080/demo/teachers?id=8 Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+{
+"name": "Сергей"
+}
+//DELETE teacher http://localhost:8080/demo/teachers?id=8 Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' not supported]
+
+//POST group NullPointerException
+{
+    "group_level": 2,
+    "teacher": {
+        "first_name": "Иван",
+        "second_name": "Иванов",
+        "last_name": "Иванович",
+        "birthday": "01.01.1991",
+        "sex": "м",
+        "e_mail": "ivanov@yandex.ru",
+        "phone_number": "777-777-77-77",
+        "login": "Ivan",
+        "password": "123"
+    },
+    "dance": {
+        "name": "lindy-hop"
+    }
+}
+
+
+//POST client NullPointerException
+{
+    "first_name": "Иван",
+    "second_name": "Иванов",
+    "last_name": "Иванович",
+    "birthday": "01.01.1991",
+    "sex": "м",
+    "e_mail": "ivanov@yandex.ru",
+    "phone_number": "777-777-77-77",
+    "login": "Ivan",
+    "password": "123"
+    "group":{
+               "group_level": 2,
+               "teacher": {
+                   "first_name": "Иван",
+                   "second_name": "Иванов",
+                   "last_name": "Иванович",
+                   "birthday": "01.01.1991",
+                   "sex": "м",
+                   "e_mail": "ivanov@yandex.ru",
+                   "phone_number": "777-777-77-77",
+                   "login": "Ivan",
+                   "password": "123"
+               },
+               "dance": {
+                   "name": "lindy-hop"
+               }
+           }
+}
+
+
