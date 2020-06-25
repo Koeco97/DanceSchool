@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class baseDto implements Serializable {
+public class BaseDto implements Serializable {
     @JsonProperty(value = "id")
     private Long id;
 

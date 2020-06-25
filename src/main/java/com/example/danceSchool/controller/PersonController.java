@@ -30,11 +30,12 @@ public class PersonController {
     }
 
     @GetMapping(value = "/{id}")
-    public PersonDto getPersonById (@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    public PersonDto getPersonById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders) {
         return personService.getPersonById(id);
     }
+
     @GetMapping
-    public List<PersonDto> getAll(){
+    public List<PersonDto> getAll() {
         return personService.getAll();
     }
 

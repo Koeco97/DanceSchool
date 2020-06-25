@@ -28,16 +28,19 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
+
     @GetMapping(value = "/{id}")
-    public ClientDto findClientById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    public ClientDto findClientById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders) {
         return clientService.findClientById(id);
     }
+
     @GetMapping
-    public List <ClientDto> getAll(){
+    public List<ClientDto> getAll() {
         return clientService.getAll();
     }
+
     @GetMapping("/map")
-    public Map<Long, ClientDto> getMap(){
+    public Map<Long, ClientDto> getMap() {
         return clientService.getAll().stream().collect(Collectors.toMap(ClientDto::getId, Function.identity()));
     }
 
@@ -46,9 +49,9 @@ public class ClientController {
         return clientService.createClient(clientDto);
     }
 
-    @PutMapping
-    public ClientDto updateClient(ClientDto clientDto) {
-        return clientService.updateClient(clientDto);
+    @PutMapping(value = "/{id}")
+    public ClientDto updateClient(@PathVariable("id") Long id, @RequestBody ClientDto clientDto) {
+        return clientService.updateClient(clientDto, id);
     }
 
     @DeleteMapping(value = "/{id}")

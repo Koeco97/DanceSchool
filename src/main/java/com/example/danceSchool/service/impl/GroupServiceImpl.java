@@ -1,11 +1,15 @@
 package com.example.danceSchool.service.impl;
 
+import com.example.danceSchool.dto.DanceDto;
 import com.example.danceSchool.dto.GroupDto;
+import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.entity.Dance;
 import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.entity.Teacher;
 import com.example.danceSchool.exception.GroupException;
+import com.example.danceSchool.repository.DanceRepository;
 import com.example.danceSchool.repository.GroupRepository;
+import com.example.danceSchool.repository.TeacherRepository;
 import com.example.danceSchool.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,17 +25,21 @@ import java.util.stream.Collectors;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final ConversionService conversionService;
+    private final TeacherRepository teacherRepository;
+    private final DanceRepository danceRepository;
 
     @Autowired
-    public GroupServiceImpl(GroupRepository groupRepository, ConversionService conversionService) {
+    public GroupServiceImpl(GroupRepository groupRepository, ConversionService conversionService, TeacherRepository teacherRepository, DanceRepository danceRepository) {
         this.groupRepository = groupRepository;
         this.conversionService = conversionService;
+        this.teacherRepository = teacherRepository;
+        this.danceRepository = danceRepository;
     }
 
     @Override
     public GroupDto findGroupById(Long id) {
-        Group group = groupRepository.findById(id).orElseThrow(()->new GroupException("Group is not found"));
-        return conversionService.convert(group,GroupDto.class);
+        Group group = groupRepository.findById(id).orElseThrow(() -> new GroupException("Group is not found"));
+        return conversionService.convert(group, GroupDto.class);
     }
 
     @Override
@@ -40,22 +49,39 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupDto updateGroup(GroupDto groupDto) {
-        Group group = groupRepository.findById(groupDto.getId()).orElseThrow(()->new GroupException("Group is not found"));
+    public GroupDto updateGroup(GroupDto groupDto, Long id) {
+        Group group = groupRepository.findById(id).orElseThrow(() -> new GroupException("Group is not found"));
         group.setGroupLevel(groupDto.getGroupLevel());
-        group.setTeacher(conversionService.convert(groupDto.getTeacher(), Teacher.class));
-        group.setDance(conversionService.convert(groupDto.getDance(), Dance.class));
+        TeacherDto teacherDto = groupDto.getTeacher();
+        if (Objects.nonNull(teacherDto)) {
+            Long teacherId = teacherDto.getId();
+            Teacher teacher = Objects.isNull(teacherId) ?
+                    conversionService.convert(teacherDto, Teacher.class) :
+                    teacherRepository.getOne(teacherId);
+            teacherRepository.save(teacher);
+            group.setTeacher(teacher);
+        }
+        DanceDto danceDto = groupDto.getDance();
+        if (Objects.nonNull(danceDto)) {
+            Long danceId = danceDto.getId();
+            Dance dance = Objects.isNull(danceId) ?
+                    conversionService.convert(danceDto, Dance.class) :
+                    danceRepository.getOne(danceId);
+            danceRepository.save(dance);
+            group.setDance(dance);
+        }
         return conversionService.convert(groupRepository.save(group), GroupDto.class);
     }
 
     @Override
     public void deleteGroup(Long id) {
-        Group group = groupRepository.findById(id).orElseThrow(()->new GroupException("Group is not found"));
+        Group group = groupRepository.findById(id).orElseThrow(() -> new GroupException("Group is not found"));
         groupRepository.delete(group);
     }
+
     @Override
     public List<GroupDto> getAll() {
-        List <Group> groups = groupRepository.findAll();
-        return groups.stream().map(group->conversionService.convert(group, GroupDto.class)).collect(Collectors.toList());
+        List<Group> groups = groupRepository.findAll();
+        return groups.stream().map(group -> conversionService.convert(group, GroupDto.class)).collect(Collectors.toList());
     }
 }

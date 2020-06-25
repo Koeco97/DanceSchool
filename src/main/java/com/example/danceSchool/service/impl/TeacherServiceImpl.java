@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto findTeacherById(Long id) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(()->new TeacherException("Teacher is not found"));
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherException("Teacher is not found"));
         return conversionService.convert(teacher, TeacherDto.class);
     }
 
@@ -38,8 +38,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto updateTeacher(TeacherDto teacherDto) {
-        Teacher teacher = teacherRepository.findById(teacherDto.getId()).orElseThrow(()->new TeacherException("Teacher is not found"));
+    public TeacherDto updateTeacher(TeacherDto teacherDto, Long id) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherException("Teacher is not found"));
         teacher.setFirstName(teacherDto.getFirstName());
         teacher.setSecondName(teacherDto.getSecondName());
         teacher.setLastName(teacherDto.getLastName());
@@ -54,12 +54,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(Long id) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(()->new TeacherException("Teacher is not found"));
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherException("Teacher is not found"));
         teacherRepository.delete(teacher);
     }
+
     @Override
     public List<TeacherDto> getAll() {
-        List <Teacher> teachers = teacherRepository.findAll();
-        return teachers.stream().map(teacher->conversionService.convert(teacher, TeacherDto.class)).collect(Collectors.toList());
+        List<Teacher> teachers = teacherRepository.findAll();
+        return teachers.stream().map(teacher -> conversionService.convert(teacher, TeacherDto.class)).collect(Collectors.toList());
     }
 }

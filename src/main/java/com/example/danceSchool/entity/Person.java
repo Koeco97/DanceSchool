@@ -1,29 +1,33 @@
 package com.example.danceSchool.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "person")
 public class Person extends EntityBase {
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column (name = "second_name")
+    @Column(name = "second_name")
     private String secondName;
-    @Column (name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column (name = "birthday")
+    @Column(name = "birthday")
     private Date birthday;
-    @Column (name = "sex")
+    @Column(name = "sex")
     private String sex;
-    @Column (name = "e_mail")
+    @Column(name = "e_mail")
     private String email;
-    @Column (name = "phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column (name = "login")
+    @Column(name = "login")
     private String login;
-    @Column (name = "password")
+    @Column(name = "password")
     private String password;
 
     public String getFirstName() {

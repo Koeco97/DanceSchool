@@ -7,9 +7,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "client")
-public class Client extends Person{
+public class Client extends Person {
     @ManyToOne
-    @JoinColumn(name="group_id")
+    @JoinColumn(name = "group_id")
     private Group group;
 
     public Group getGroup() {

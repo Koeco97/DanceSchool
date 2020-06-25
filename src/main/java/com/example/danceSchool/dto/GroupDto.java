@@ -2,7 +2,7 @@ package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GroupDto extends baseDto{
+public class GroupDto extends BaseDto {
     @JsonProperty(value = "group_level")
     private int groupLevel;
     @JsonProperty(value = "teacher")

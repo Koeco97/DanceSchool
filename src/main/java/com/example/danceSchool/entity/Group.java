@@ -1,22 +1,28 @@
 package com.example.danceSchool.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "group")
-public class Group extends EntityBase{
+@Table(name = "\"group\"")
+public class Group extends EntityBase {
     @Column(name = "group_level")
     private int groupLevel;
     @ManyToOne
-    @JoinColumn(name="teacher_id")
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
     @ManyToOne
-    @JoinColumn(name="dance_id")
+    @JoinColumn(name = "dance_id")
     private Dance dance;
-    @OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Client> clients;
-    @OneToMany (mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
     public int getGroupLevel() {

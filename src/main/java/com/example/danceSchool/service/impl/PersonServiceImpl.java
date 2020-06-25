@@ -27,7 +27,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDto getPersonById(Long id) {
-        Person person = personRepository.findById(id).orElseThrow(()->new PersonException("Person is not found"));
+        Person person = personRepository.findById(id).orElseThrow(() -> new PersonException("Person is not found"));
         return conversionService.convert(person, PersonDto.class);
     }
 
@@ -53,13 +53,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePerson(Long id) {
-        Person person = personRepository.findById(id).orElseThrow(()->new PersonException("Person is not found"));
+        Person person = personRepository.findById(id).orElseThrow(() -> new PersonException("Person is not found"));
         personRepository.delete(person);
     }
 
     @Override
     public List<PersonDto> getAll() {
-        List <Person> persons = personRepository.findAll();
-        return persons.stream().map(person->conversionService.convert(person, PersonDto.class)).collect(Collectors.toList());
+        List<Person> persons = personRepository.findAll();
+        return persons.stream().map(person -> conversionService.convert(person, PersonDto.class)).collect(Collectors.toList());
     }
 }

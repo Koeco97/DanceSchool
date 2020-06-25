@@ -2,7 +2,7 @@ package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DanceDto extends baseDto {
+public class DanceDto extends BaseDto {
     @JsonProperty(value = "name")
     private String name;
 

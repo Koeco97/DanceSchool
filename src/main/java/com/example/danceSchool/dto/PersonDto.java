@@ -5,25 +5,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-public class PersonDto extends baseDto {
+public class PersonDto extends BaseDto {
     @JsonProperty(value = "first_name")
     private String firstName;
-    @JsonProperty (value = "second_name")
+    @JsonProperty(value = "second_name")
     private String secondName;
-    @JsonProperty (value = "last_name")
+    @JsonProperty(value = "last_name")
     private String lastName;
-    @JsonProperty (value = "birthday")
+    @JsonProperty(value = "birthday")
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date birthday;
-    @JsonProperty (value = "sex")
+    @JsonProperty(value = "sex")
     private String sex;
-    @JsonProperty (value = "e_mail")
+    @JsonProperty(value = "e_mail")
     private String email;
-    @JsonProperty (value = "phone_number")
+    @JsonProperty(value = "phone_number")
     private String phoneNumber;
-    @JsonProperty (value = "login")
+    @JsonProperty(value = "login")
     private String login;
-    @JsonProperty (value = "password")
+    @JsonProperty(value = "password")
     private String password;
 
     public String getFirstName() {

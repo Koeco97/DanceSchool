@@ -8,6 +8,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import static com.example.danceSchool.converter.PersonToPersonDtoConverter.copyProperties;
+
+
 @Component
 public class ClientToClientDtoConverter implements Converter<Client, ClientDto> {
     private final ConversionService conversionService;
@@ -20,17 +23,7 @@ public class ClientToClientDtoConverter implements Converter<Client, ClientDto> 
     @Override
     public ClientDto convert(Client client) {
         ClientDto target = new ClientDto();
-        target.setId(client.getId());
-        target.setId(client.getId());
-        target.setFirstName(client.getFirstName());
-        target.setSecondName(client.getSecondName());
-        target.setLastName(client.getLastName());
-        target.setBirthday(client.getBirthday());
-        target.setSex(client.getSex());
-        target.setEmail(client.getEmail());
-        target.setPhoneNumber(client.getPhoneNumber());
-        target.setLogin(client.getLogin());
-        target.setPassword(client.getPassword());
+        copyProperties(client, target);
         target.setGroup(conversionService.convert(client.getGroup(), GroupDto.class));
         return target;
     }

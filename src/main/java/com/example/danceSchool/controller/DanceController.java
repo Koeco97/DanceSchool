@@ -30,11 +30,12 @@ public class DanceController {
     }
 
     @GetMapping(value = "/{id}")
-    public DanceDto findDanceById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders){
+    public DanceDto findDanceById(@PathVariable("id") Long id, @RequestHeader HttpHeaders httpHeaders) {
         return danceService.findDanceById(id);
     }
+
     @GetMapping
-    public List<DanceDto> getAll(){
+    public List<DanceDto> getAll() {
         return danceService.getAll();
     }
 

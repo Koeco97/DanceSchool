@@ -27,7 +27,7 @@ public class DanceServiceImpl implements DanceService {
 
     @Override
     public DanceDto findDanceById(Long id) {
-        Dance dance = danceRepository.findById(id).orElseThrow(()->new DanceException("Dance is not found"));
+        Dance dance = danceRepository.findById(id).orElseThrow(() -> new DanceException("Dance is not found"));
         return conversionService.convert(dance, DanceDto.class);
     }
 
@@ -46,13 +46,13 @@ public class DanceServiceImpl implements DanceService {
 
     @Override
     public void deleteDance(Long id) {
-        Dance dance = danceRepository.findById(id).orElseThrow(()->new DanceException("Dance is not found"));
+        Dance dance = danceRepository.findById(id).orElseThrow(() -> new DanceException("Dance is not found"));
         danceRepository.delete(dance);
     }
 
     @Override
     public List<DanceDto> getAll() {
-        List <Dance> dances = danceRepository.findAll();
-        return dances.stream().map(dance->conversionService.convert(dance, DanceDto.class)).collect(Collectors.toList());
+        List<Dance> dances = danceRepository.findAll();
+        return dances.stream().map(dance -> conversionService.convert(dance, DanceDto.class)).collect(Collectors.toList());
     }
 }

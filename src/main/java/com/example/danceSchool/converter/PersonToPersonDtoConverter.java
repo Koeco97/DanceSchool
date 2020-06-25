@@ -7,14 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PersonToPersonDtoConverter implements Converter<Person, PersonDto> {
-    @Override
-    public PersonDto convert(Person person) {
-        PersonDto target = new PersonDto();
-        copyProperties(person, target);
-        return target;
-    }
-
-    public void copyProperties(Person person, PersonDto target) {
+    public static void copyProperties(Person person, PersonDto target) {
         target.setId(person.getId());
         target.setFirstName(person.getFirstName());
         target.setSecondName(person.getSecondName());
@@ -25,5 +18,12 @@ public class PersonToPersonDtoConverter implements Converter<Person, PersonDto> 
         target.setPhoneNumber(person.getPhoneNumber());
         target.setLogin(person.getLogin());
         target.setPassword(person.getPassword());
+    }
+
+    @Override
+    public PersonDto convert(Person person) {
+        PersonDto target = new PersonDto();
+        copyProperties(person, target);
+        return target;
     }
 }
