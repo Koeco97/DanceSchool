@@ -1,4 +1,4 @@
-package com.example.danceSchool.converter.config;
+package com.example.danceSchool.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

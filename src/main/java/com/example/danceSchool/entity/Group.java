@@ -15,9 +15,6 @@ public class Group extends EntityBase {
     @Column(name = "group_level")
     private int groupLevel;
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-    @ManyToOne
     @JoinColumn(name = "dance_id")
     private Dance dance;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
@@ -49,19 +46,15 @@ public class Group extends EntityBase {
         this.lessons = lessons;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
     public Dance getDance() {
         return dance;
     }
 
     public void setDance(Dance dance) {
         this.dance = dance;
+    }
+
+    public void addClient(Client client) {
+        clients.add(client);
     }
 }

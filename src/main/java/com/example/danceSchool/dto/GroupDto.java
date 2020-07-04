@@ -2,11 +2,11 @@ package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class GroupDto extends BaseDto {
     @JsonProperty(value = "group_level")
     private int groupLevel;
-    @JsonProperty(value = "teacher")
-    private TeacherDto teacher;
     @JsonProperty(value = "dance")
     private DanceDto dance;
 
@@ -18,14 +18,6 @@ public class GroupDto extends BaseDto {
         this.groupLevel = groupLevel;
     }
 
-    public TeacherDto getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(TeacherDto teacher) {
-        this.teacher = teacher;
-    }
-
     public DanceDto getDance() {
         return dance;
     }
@@ -34,4 +26,21 @@ public class GroupDto extends BaseDto {
         this.dance = dance;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupLevel, dance);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GroupDto groupDto = (GroupDto) o;
+        return groupLevel == groupDto.groupLevel &&
+                Objects.equals(dance, groupDto.dance);
+    }
 }

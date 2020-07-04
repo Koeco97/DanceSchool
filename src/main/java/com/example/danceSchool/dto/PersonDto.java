@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class PersonDto extends BaseDto {
     @JsonProperty(value = "first_name")
@@ -98,4 +99,28 @@ public class PersonDto extends BaseDto {
         this.password = password;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, secondName, lastName, birthday, sex, email, phoneNumber, login, password);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PersonDto personDto = (PersonDto) o;
+        return Objects.equals(firstName, personDto.firstName) &&
+                Objects.equals(secondName, personDto.secondName) &&
+                Objects.equals(lastName, personDto.lastName) &&
+                Objects.equals(birthday, personDto.birthday) &&
+                Objects.equals(sex, personDto.sex) &&
+                Objects.equals(email, personDto.email) &&
+                Objects.equals(phoneNumber, personDto.phoneNumber) &&
+                Objects.equals(login, personDto.login) &&
+                Objects.equals(password, personDto.password);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.danceSchool.converter;
 
 import com.example.danceSchool.dto.GroupDto;
 import com.example.danceSchool.dto.LessonDto;
+import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.entity.Lesson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -21,8 +22,11 @@ public class LessonToLessonDtoConverter implements Converter<Lesson, LessonDto> 
     public LessonDto convert(Lesson lesson) {
         LessonDto target = new LessonDto();
         target.setId(lesson.getId());
-        target.setDate(lesson.getDate());
-        target.setComment(lesson.getComment());
+        target.setBegin(lesson.getBegin());
+        target.setEnd(lesson.getEnd());
+        target.setLength(lesson.getLength());
+        target.setStatus(lesson.getStatus());
+        target.setTeacher(conversionService.convert(lesson.getTeacher(), TeacherDto.class));
         target.setGroup(conversionService.convert(lesson.getGroup(), GroupDto.class));
         return target;
     }

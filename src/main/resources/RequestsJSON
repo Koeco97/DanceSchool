@@ -1,3 +1,31 @@
+Роли: админ, клиент, преподаватель
+Админ:
+    1. Посмотреть урок по id: GET http://localhost:8080/demo/admin/lesson/{id}
+    2. Посмотреть все уроки: GET http://localhost:8080/demo/admin/lessons
+    3. Посмотреть отклоненные уроки: GET http://localhost:8080/demo/admin/lessons/declined
+    4. Создать урок на свободное время: POST http://localhost:8080/demo/admin/lesson
+    5. Обновить урок: PUT http://localhost:8080/demo/admin/lesson{id}
+    6. Получить и отправить расписание всем преподавателям, у которых есть уроки со статусом null
+    GET http://localhost:8080/demo/admin/shedule
+    7. Удалить любой неподтвержденный урок: DELETE http://localhost:8080/demo/admin/lesson{id}
+    8. Перенаправить отклоненный урок: PUT http://localhost:8080/demo/admin/lesson/{lessonId}/redirect/{teacherId}
+
+Преподаватель:
+    1. Посмотреть список уроков по id преподавателя: GET http://localhost:8080/demo/teachers/{id}/lessons
+    2. Подтвердить урок: PUT http://localhost:8080/demo/teachers/{id}/approve/{lessonId}
+    3. Отклонить урок: PUT http://localhost:8080/demo/teachers/{id}/decline/{lessonId}
+
+Клиент:
+    1. записаться в группу: PUT http://localhost:8080/demo/clients/{clientId}/join/{groupId}
+    2. Посмотреть расписание, отсортированное по дате начала:
+            http://localhost:8080/demo/clients/shedule/sortByBegin
+    3. Посмотреть расписание, отсортированное по дате окончания:
+            http://localhost:8080/demo/clients/shedule/sortByEnd
+    4. Посмотреть расписание, отсортированное по длительности в минутах:
+            http://localhost:8080/demo/clients/shedule/sortByLength
+    5. Посмотреть расписание, отсортированное по типу танца:
+            http://localhost:8080/demo/clients/shedule/sortByDance
+
 //POST person http://localhost:8080/demo/persons
 {
     "first_name": "Иван",
@@ -112,15 +140,17 @@
 
 //POST lessons http://localhost:8080/demo/lessons
 {
-"date": "20.07.2020 18:00",
+"begin": "15.07.2020 18:00",
+"end": "15.07.2020 20:00",
 "group": {"id":1},
-"comment": "length 60 min"
+"teacher":{"id":1}
 }
 //GET lessons http://localhost:8080/demo/lessons/1
 //PUT lessons http://localhost:8080/demo/lessons/1
 {
-"date": "20.07.2020 19:00",
-"group": {"id":1},
-"comment": "length 90 min"
+"begin": "15.07.2020 18:00",
+"end": "15.07.2020 20:00",
+"group": {"id":2},
+"teacher":{"id":2}
 }
 //DELETE lessons http://localhost:8080/demo/lessons/1

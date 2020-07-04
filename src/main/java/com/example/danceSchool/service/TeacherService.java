@@ -1,5 +1,7 @@
 package com.example.danceSchool.service;
 
+import com.example.danceSchool.dto.LessonDto;
+import com.example.danceSchool.dto.SheduleReport;
 import com.example.danceSchool.dto.TeacherDto;
 
 import java.util.List;
@@ -14,4 +16,10 @@ public interface TeacherService {
     void deleteTeacher(Long id);
 
     public List<TeacherDto> getAll();
+
+    public List<SheduleReport> getLessons(long id);
+
+    public LessonDto approve(long teacherId, long lessonId);
+
+    public LessonDto decline(long teacherId, long lessonId);
 }

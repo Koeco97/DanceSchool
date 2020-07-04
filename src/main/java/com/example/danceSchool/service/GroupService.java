@@ -14,4 +14,5 @@ public interface GroupService {
     void deleteGroup(Long id);
 
     public List<GroupDto> getAll();
+
 }

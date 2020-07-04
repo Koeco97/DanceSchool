@@ -1,5 +1,7 @@
 package com.example.danceSchool.controller;
 
+import com.example.danceSchool.dto.LessonDto;
+import com.example.danceSchool.dto.SheduleReport;
 import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,20 @@ public class TeacherController {
     @DeleteMapping(value = "/{id}")
     public void deleteTeacher(@PathVariable Long id) {
         teacherService.deleteTeacher(id);
+    }
+
+    @GetMapping("/{id}/lessons")
+    public List<SheduleReport> getLessons(@PathVariable Long id) {
+        return teacherService.getLessons(id);
+    }
+
+    @PutMapping("/{id}/approve/{lessonId}")
+    public LessonDto approve(@PathVariable("id") Long id, @PathVariable("lessonId") Long lessonId) {
+        return teacherService.approve(id, lessonId);
+    }
+
+    @PutMapping("/{id}/decline/{lessonId}")
+    public LessonDto decline(@PathVariable("id") Long id, @PathVariable("lessonId") Long lessonId) {
+        return teacherService.decline(id, lessonId);
     }
 }

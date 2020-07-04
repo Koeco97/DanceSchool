@@ -21,6 +21,12 @@ CREATE TABLE `teacher` (
 );
 
 USE `dance_school`;
+CREATE TABLE `admin` (
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         foreign key (`id`) references `person` (`id`)
+);
+
+USE `dance_school`;
 CREATE TABLE `dance` (
                          `id` bigint auto_increment primary key,
                          `name` varchar(255) null
@@ -30,12 +36,9 @@ USE `dance_school`;
 CREATE TABLE `group` (
                          `id` bigint auto_increment primary key,
                          `group_level` bigint null,
-                         `teacher_id` bigint null,
                          `dance_id` bigint null,
                          constraint `group_dance_constraint`
-                             foreign key (`dance_id`) references `dance` (`id`),
-                         constraint `group_teacher_constraint`
-                             foreign key (`teacher_id`) references `teacher` (`id`)
+                             foreign key (`dance_id`) references `dance` (`id`)
 );
 
 USE `dance_school`;
@@ -50,10 +53,16 @@ CREATE TABLE `client` (
 USE `dance_school`;
 CREATE TABLE `lesson` (
                           `id` bigint auto_increment primary key,
-                          `date` datetime null,
+                          `begin` datetime null,
+                          `end` datetime null,
+                          `length` bigint null,
                           `group_id` bigint null,
-                          `comment` varchar(255) null,
+                          `teacher_id` bigint null,
+                          `status` varchar(255) null,
                           constraint `class_group_constraint`
-                              foreign key (`group_id`) references `group` (`id`)
+                              foreign key (`group_id`) references `group` (`id`),
+                          constraint `lesson_teacher_constraint`
+                              foreign key (`teacher_id`) references `teacher` (`id`)
 );
+
 

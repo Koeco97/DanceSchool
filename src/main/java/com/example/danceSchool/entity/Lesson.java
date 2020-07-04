@@ -14,26 +14,48 @@ public class Lesson extends EntityBase {
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
-    @Column(name = "date")
-    private Date date;
-    @Column(name = "comment")
-    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+    @Column(name = "begin")
+    private Date begin;
+    @Column(name = "end")
+    private Date end;
+    @Column(name = "length")
+    private int length;
+    @Column(name = "status")
+    private String status;
 
-
-    public Date getDate() {
-        return date;
+    public Date getBegin() {
+        return begin;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBegin(Date begin) {
+        this.begin = begin;
     }
 
-    public String getComment() {
-        return comment;
+    public Date getEnd() {
+        return end;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String comment) {
+        this.status = comment;
     }
 
     public Group getGroup() {
@@ -42,5 +64,13 @@ public class Lesson extends EntityBase {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

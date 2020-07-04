@@ -1,9 +1,11 @@
 package com.example.danceSchool.controller;
 
 import com.example.danceSchool.dto.ClientDto;
+import com.example.danceSchool.dto.SheduleReport;
 import com.example.danceSchool.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -58,4 +61,32 @@ public class ClientController {
     public void deleteClient(@PathVariable("id") Long id) {
         clientService.deleteClient(id);
     }
+
+    @GetMapping("/shedule/sortByBegin")
+    public List<SheduleReport> getLessonsSortedByBegin() {
+        return clientService.getLessonsSortedByBegin();
+    }
+
+    @GetMapping("/shedule/sortByEnd")
+    public List<SheduleReport> getLessonsSortedByEnd() {
+        return clientService.getLessonsSortedByEnd();
+    }
+
+    @GetMapping("/shedule/sortByLength")
+    public List<SheduleReport> getLessonsSortedByLength() {
+        return clientService.getLessonsSortedByLength();
+    }
+
+    @GetMapping("/shedule/sortByDance")
+    public List<SheduleReport> getLessonsSortedByDance() {
+        return clientService.getLessonsSortedByType();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{clientId}/join/{groupId}")
+    public void updateClient(@PathVariable("clientId") Long clientId, @PathVariable("groupId") Long groupId) {
+        clientService.joinGroup(clientId, groupId);
+    }
+
+
 }

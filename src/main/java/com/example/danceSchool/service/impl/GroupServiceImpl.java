@@ -2,10 +2,8 @@ package com.example.danceSchool.service.impl;
 
 import com.example.danceSchool.dto.DanceDto;
 import com.example.danceSchool.dto.GroupDto;
-import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.entity.Dance;
 import com.example.danceSchool.entity.Group;
-import com.example.danceSchool.entity.Teacher;
 import com.example.danceSchool.exception.GroupException;
 import com.example.danceSchool.repository.DanceRepository;
 import com.example.danceSchool.repository.GroupRepository;
@@ -25,14 +23,12 @@ import java.util.stream.Collectors;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final ConversionService conversionService;
-    private final TeacherRepository teacherRepository;
     private final DanceRepository danceRepository;
 
     @Autowired
     public GroupServiceImpl(GroupRepository groupRepository, ConversionService conversionService, TeacherRepository teacherRepository, DanceRepository danceRepository) {
         this.groupRepository = groupRepository;
         this.conversionService = conversionService;
-        this.teacherRepository = teacherRepository;
         this.danceRepository = danceRepository;
     }
 
@@ -52,15 +48,6 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto updateGroup(GroupDto groupDto, Long id) {
         Group group = groupRepository.findById(id).orElseThrow(() -> new GroupException("Group is not found"));
         group.setGroupLevel(groupDto.getGroupLevel());
-        TeacherDto teacherDto = groupDto.getTeacher();
-        if (Objects.nonNull(teacherDto)) {
-            Long teacherId = teacherDto.getId();
-            Teacher teacher = Objects.isNull(teacherId) ?
-                    conversionService.convert(teacherDto, Teacher.class) :
-                    teacherRepository.getOne(teacherId);
-            teacherRepository.save(teacher);
-            group.setTeacher(teacher);
-        }
         DanceDto danceDto = groupDto.getDance();
         if (Objects.nonNull(danceDto)) {
             Long danceId = danceDto.getId();

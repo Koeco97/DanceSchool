@@ -10,13 +10,13 @@ import java.util.List;
 @Table(name = "teacher")
 public class Teacher extends Person {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private List<Group> groups;
+    private List<Lesson> lessons;
 
-    public List<Group> getGroups() {
-        return groups;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

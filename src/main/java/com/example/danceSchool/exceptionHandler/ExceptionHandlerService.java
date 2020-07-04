@@ -1,5 +1,6 @@
 package com.example.danceSchool.exceptionHandler;
 
+import com.example.danceSchool.exception.AdminException;
 import com.example.danceSchool.exception.ClientException;
 import com.example.danceSchool.exception.DanceException;
 import com.example.danceSchool.exception.GroupException;
@@ -44,5 +45,11 @@ public class ExceptionHandlerService {
     public ResponseEntity<Object> handler(TeacherException e, WebRequest request) {
         return new ResponseEntity<Object>(e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<Object> handler(AdminException e, WebRequest request) {
+        return new ResponseEntity<Object>(e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
 }
+
 
