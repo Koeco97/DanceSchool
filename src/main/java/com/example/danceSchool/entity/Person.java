@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -29,6 +31,9 @@ public class Person extends EntityBase {
     private String login;
     @Column(name = "password")
     private String password;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public String getFirstName() {
         return firstName;
@@ -101,4 +106,13 @@ public class Person extends EntityBase {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
+

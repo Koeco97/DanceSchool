@@ -9,10 +9,12 @@ import com.example.danceSchool.entity.Group;
 import com.example.danceSchool.exception.ClientException;
 import com.example.danceSchool.repository.ClientRepository;
 import com.example.danceSchool.repository.GroupRepository;
+import com.example.danceSchool.repository.RoleRepository;
 import com.example.danceSchool.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +30,17 @@ public class ClientServiceImpl implements ClientService {
     private final GroupRepository groupRepository;
     private final ConversionService conversionService;
     private final JdbcTemplate jdbcTemplate;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository, GroupRepository groupRepository, ConversionService conversionService, JdbcTemplate jdbcTemplate) {
+    public ClientServiceImpl(ClientRepository clientRepository, GroupRepository groupRepository, ConversionService conversionService, JdbcTemplate jdbcTemplate, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.groupRepository = groupRepository;
         this.conversionService = conversionService;
         this.jdbcTemplate = jdbcTemplate;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -124,6 +130,21 @@ public class ClientServiceImpl implements ClientService {
         group.addClient(client);
     }
 
+    @Override
+    public Client findByLogin(String login) {
+        return clientRepository.findByLogin(login);
+    }
 
+    @Override
+    public Client findByLoginAndPassword(String login, String password) {
+        Client client = findByLogin(login);
+        if (client != null) {
+            if (passwordEncoder.matches(password, client.getPassword())) {
+                return client;
+            }
+        }
+        return null;
+    }
 }
+
 

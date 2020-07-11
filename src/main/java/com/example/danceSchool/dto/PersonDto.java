@@ -26,6 +26,8 @@ public class PersonDto extends BaseDto {
     private String login;
     @JsonProperty(value = "password")
     private String password;
+    @JsonProperty(value = "role")
+    private String role;
 
     public String getFirstName() {
         return firstName;
@@ -122,5 +124,9 @@ public class PersonDto extends BaseDto {
                 Objects.equals(phoneNumber, personDto.phoneNumber) &&
                 Objects.equals(login, personDto.login) &&
                 Objects.equals(password, personDto.password);
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

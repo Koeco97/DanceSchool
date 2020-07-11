@@ -19,4 +19,8 @@ server:
   servlet:
     context-path: /demo
 
+test:
+  field: "value"
 
+jwt:
+  secret: danceSchool

@@ -2,6 +2,7 @@ package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.dto.SheduleReport;
+import com.example.danceSchool.entity.Client;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface ClientService {
     public List<SheduleReport> getLessonsSortedByType();
 
     public void joinGroup(Long clientId, Long groupId);
+
+    public Client findByLogin(String login);
+
+    public Client findByLoginAndPassword(String login, String password);
 }

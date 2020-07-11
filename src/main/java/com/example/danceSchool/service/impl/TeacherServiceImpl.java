@@ -65,7 +65,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setEmail(teacherDto.getEmail());
         teacher.setPhoneNumber(teacherDto.getPhoneNumber());
         teacher.setLogin(teacherDto.getLogin());
-        teacher.setPassword(teacherDto.getPassword());
         return conversionService.convert(teacherRepository.save(teacher), TeacherDto.class);
     }
 
@@ -106,4 +105,6 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return conversionService.convert(lessonRepository.save(lesson), LessonDto.class);
     }
+
+
 }

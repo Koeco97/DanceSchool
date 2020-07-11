@@ -3,8 +3,10 @@ package com.example.danceSchool.controller;
 import com.example.danceSchool.dto.AdminDto;
 import com.example.danceSchool.dto.LessonDto;
 import com.example.danceSchool.dto.SheduleReport;
+import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.service.AdminService;
 import com.example.danceSchool.service.LessonService;
+import com.example.danceSchool.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,12 +29,14 @@ import java.util.stream.Collectors;
 public class AdminController {
     private final AdminService adminService;
     private final LessonService lessonService;
+    private final TeacherService teacherService;
 
 
     @Autowired
-    public AdminController(AdminService adminService, LessonService lessonService) {
+    public AdminController(AdminService adminService, LessonService lessonService, TeacherService teacherService) {
         this.adminService = adminService;
         this.lessonService = lessonService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping(value = "/{id}")
@@ -80,12 +84,12 @@ public class AdminController {
         return adminService.getDeclinedLessons();
     }
 
-    @PostMapping("/lesson")
+    @PostMapping("/lessons/new")
     public LessonDto createLesson(@RequestBody LessonDto lessonDto) {
         return lessonService.createLesson(lessonDto);
     }
 
-    @PutMapping(value = "/lesson/{id}")
+    @PutMapping(value = "/lessons/{id}")
     public LessonDto updateLesson(@PathVariable("id") Long id, @RequestBody LessonDto lessonDto) {
         return lessonService.updateLesson(lessonDto, id);
     }
@@ -95,15 +99,29 @@ public class AdminController {
         adminService.sendShedule();
     }
 
-    @DeleteMapping(value = "/lesson/{id}")
+    @DeleteMapping(value = "/lessons/{id}")
     public void deleteLesson(@PathVariable Long id) {
         lessonService.deleteLesson(id);
     }
 
-    @PutMapping("/lesson/{lessonId}/redirect/{teacherId}")
+    @PutMapping("/lessons/{lessonId}/redirect/{teacherId}")
     public LessonDto redirect(@PathVariable("lessonId") Long id, @PathVariable("teacherId") Long teacherId) {
         return adminService.redirect(id, teacherId);
     }
 
+    @GetMapping("/teachers/new")
+    public List<TeacherDto> getNewTeachers() {
+        return adminService.getTeachersWithoutRole();
+    }
+
+    @PutMapping(value = "/teachers/{id}")
+    public void giveTeacherRole(@PathVariable("id") Long id) {
+        adminService.giveTeacherRole(id);
+    }
+
+    @DeleteMapping(value = "/teachers/{id}")
+    public void deleteTeacher(@PathVariable Long id) {
+        teacherService.deleteTeacher(id);
+    }
 
 }

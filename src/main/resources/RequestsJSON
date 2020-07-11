@@ -1,21 +1,28 @@
 Роли: админ, клиент, преподаватель
 Админ:
-    1. Посмотреть урок по id: GET http://localhost:8080/demo/admin/lesson/{id}
+С ролью админа создается первый зарегистрированный пользователь
+    1. Посмотреть урок по id: GET http://localhost:8080/demo/admin/lessons/{id}
     2. Посмотреть все уроки: GET http://localhost:8080/demo/admin/lessons
     3. Посмотреть отклоненные уроки: GET http://localhost:8080/demo/admin/lessons/declined
-    4. Создать урок на свободное время: POST http://localhost:8080/demo/admin/lesson
-    5. Обновить урок: PUT http://localhost:8080/demo/admin/lesson{id}
+    4. Создать урок на свободное время: POST http://localhost:8080/demo/admin/lessons/new
+    5. Обновить урок: PUT http://localhost:8080/demo/admin/lessons/{id}
     6. Получить и отправить расписание всем преподавателям, у которых есть уроки со статусом null
     GET http://localhost:8080/demo/admin/shedule
     7. Удалить любой неподтвержденный урок: DELETE http://localhost:8080/demo/admin/lesson{id}
     8. Перенаправить отклоненный урок: PUT http://localhost:8080/demo/admin/lesson/{lessonId}/redirect/{teacherId}
+    9. Может посмотреть новых юзеров, зарегистрировавшихся, как преподаватель
+    GET http://localhost:8080/demo/admin/teachers/new
+    10. Дать роль TEACHER PUT http://localhost:8080/demo/admin/teachers/{id}
+    11. Удалить преподавателя DELETE http://localhost:8080/demo/admin/teachers/{id}
 
 Преподаватель:
+При регистрации преподаватель получает роль USER, роль TEACHER устанавливается админом
     1. Посмотреть список уроков по id преподавателя: GET http://localhost:8080/demo/teachers/{id}/lessons
     2. Подтвердить урок: PUT http://localhost:8080/demo/teachers/{id}/approve/{lessonId}
     3. Отклонить урок: PUT http://localhost:8080/demo/teachers/{id}/decline/{lessonId}
 
 Клиент:
+Роль клиента устанавливается при регистрации
     1. записаться в группу: PUT http://localhost:8080/demo/clients/{clientId}/join/{groupId}
     2. Посмотреть расписание, отсортированное по дате начала:
             http://localhost:8080/demo/clients/shedule/sortByBegin
@@ -25,6 +32,19 @@
             http://localhost:8080/demo/clients/shedule/sortByLength
     5. Посмотреть расписание, отсортированное по типу танца:
             http://localhost:8080/demo/clients/shedule/sortByDance
+
+POST http://localhost:8080/demo/signUp/client
+{
+"email": "admin@mail.ru",
+"password": "111"
+}
+
+http://localhost:8080/demo/authenticate
+{
+"username": "admin@mail.ru",
+"password": "111"
+}
+
 
 //POST person http://localhost:8080/demo/persons
 {

@@ -18,6 +18,7 @@ public class PersonToPersonDtoConverter implements Converter<Person, PersonDto> 
         target.setPhoneNumber(person.getPhoneNumber());
         target.setLogin(person.getLogin());
         target.setPassword(person.getPassword());
+        target.setRole(person.getRole().getName());
     }
 
     @Override
