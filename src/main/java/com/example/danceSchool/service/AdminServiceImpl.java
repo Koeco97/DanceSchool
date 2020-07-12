@@ -1,4 +1,4 @@
-package com.example.danceSchool.service.impl;
+package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.AdminDto;
 import com.example.danceSchool.dto.LessonDto;
@@ -14,8 +14,6 @@ import com.example.danceSchool.repository.AdminRepository;
 import com.example.danceSchool.repository.LessonRepository;
 import com.example.danceSchool.repository.RoleRepository;
 import com.example.danceSchool.repository.TeacherRepository;
-import com.example.danceSchool.service.AdminService;
-import com.example.danceSchool.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.JdbcTemplate;

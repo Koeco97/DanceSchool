@@ -1,4 +1,4 @@
-package com.example.danceSchool.service.impl;
+package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.DanceDto;
 import com.example.danceSchool.dto.GroupDto;
@@ -8,7 +8,6 @@ import com.example.danceSchool.exception.GroupException;
 import com.example.danceSchool.repository.DanceRepository;
 import com.example.danceSchool.repository.GroupRepository;
 import com.example.danceSchool.repository.TeacherRepository;
-import com.example.danceSchool.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;

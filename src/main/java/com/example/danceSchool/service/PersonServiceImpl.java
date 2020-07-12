@@ -1,10 +1,9 @@
-package com.example.danceSchool.service.impl;
+package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.PersonDto;
 import com.example.danceSchool.entity.Person;
 import com.example.danceSchool.exception.PersonException;
 import com.example.danceSchool.repository.PersonRepository;
-import com.example.danceSchool.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;

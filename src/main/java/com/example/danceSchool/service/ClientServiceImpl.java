@@ -1,4 +1,4 @@
-package com.example.danceSchool.service.impl;
+package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.ClientDto;
 import com.example.danceSchool.dto.GroupDto;
@@ -10,7 +10,6 @@ import com.example.danceSchool.exception.ClientException;
 import com.example.danceSchool.repository.ClientRepository;
 import com.example.danceSchool.repository.GroupRepository;
 import com.example.danceSchool.repository.RoleRepository;
-import com.example.danceSchool.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.JdbcTemplate;
