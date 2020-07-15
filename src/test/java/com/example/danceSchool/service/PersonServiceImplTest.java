@@ -1,12 +1,11 @@
-package com.example.danceSchool.service.impl;
+package com.example.danceSchool.service;
 
 import com.example.danceSchool.dto.PersonDto;
 import com.example.danceSchool.entity.Person;
 import com.example.danceSchool.exception.PersonException;
 import com.example.danceSchool.repository.PersonRepository;
-import com.example.danceSchool.service.PersonServiceImpl;
+import com.example.danceSchool.service.impl.PersonServiceImpl;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.convert.ConversionService;
 
@@ -32,14 +31,14 @@ public class PersonServiceImplTest {
     @Mock
     private ConversionService conversionService;
 
-    @Test
+    @org.junit.Test
     public void verifyGetPersonByIdFromRepository() {
         Mockito.when(personRepository.findById(any())).thenReturn(Optional.of(new Person()));
         personService.getPersonById(1L);
         Mockito.verify(personRepository).findById(any());
     }
 
-    @Test
+    @org.junit.Test
     public void testGetPersonByIdPersonNotFound() {
         Mockito.when(personRepository.findById(any())).thenReturn(Optional.empty());
         try {
@@ -50,7 +49,7 @@ public class PersonServiceImplTest {
         }
     }
 
-    @Test
+    @org.junit.Test
     public void checkConvertPerson() {
         Person exceptedPerson = new Person();
         PersonDto exceptedPersonDto = new PersonDto();
@@ -61,7 +60,7 @@ public class PersonServiceImplTest {
         Assert.assertSame(exceptedPersonDto, result);
     }
 
-    @Test
+    @org.junit.Test
     public void getAllPersonsTest() {
         Person person1 = new Person();
         Person person2 = new Person();
@@ -69,7 +68,7 @@ public class PersonServiceImplTest {
         assertEquals(2, personService.getAll().size());
     }
 
-    @Test
+    @org.junit.Test
     public void deletePersonTest() {
         Person person = new Person();
         Mockito.when(personRepository.findById(any())).thenReturn(Optional.of(new Person()));

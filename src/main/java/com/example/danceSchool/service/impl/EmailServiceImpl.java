@@ -1,5 +1,6 @@
-package com.example.danceSchool.service;
+package com.example.danceSchool.service.impl;
 
+import com.example.danceSchool.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

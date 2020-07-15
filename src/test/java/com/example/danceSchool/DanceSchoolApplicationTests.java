@@ -10,4 +10,5 @@ class DanceSchoolApplicationTests {
     void contextLoads() {
     }
 
+
 }
