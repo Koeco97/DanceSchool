@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class LessonDto extends BaseDto {
     @JsonProperty(value = "begin")
-    @JsonFormat(pattern = "dd.MM.yyyy hh:mm", timezone = "Europe/Moscow")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Moscow")
     private Date begin;
     @JsonProperty(value = "end")
-    @JsonFormat(pattern = "dd.MM.yyyy hh:mm", timezone = "Europe/Moscow")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Moscow")
     private Date end;
 
     private int length;

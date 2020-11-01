@@ -94,7 +94,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<SheduleReport> getLessonsSortedByBegin() {
         List<SheduleReport> lessons = new ArrayList<>();
-        String query = "SELECT lesson.id, `begin`, `end`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id ORDER BY `begin`";
+        String query = "SELECT lesson.id, `begin`, `end`, `teacher_id`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id WHERE `begin`>=CURRENT_DATE ORDER BY `begin`";
         lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
         return lessons;
     }
@@ -102,7 +102,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<SheduleReport> getLessonsSortedByEnd() {
         List<SheduleReport> lessons = new ArrayList<>();
-        String query = "SELECT lesson.id, `begin`, `end`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id ORDER BY `end`";
+        String query = "SELECT lesson.id, `begin`, `end`, `teacher_id`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id WHERE `begin`>=CURRENT_DATE ORDER BY `end`";
         lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
         return lessons;
     }
@@ -110,7 +110,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<SheduleReport> getLessonsSortedByLength() {
         List<SheduleReport> lessons = new ArrayList<>();
-        String query = "SELECT lesson.id, `begin`, `end`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id ORDER BY `length`";
+        String query = "SELECT lesson.id, `begin`, `end`, `teacher_id`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id WHERE `begin`>=CURRENT_DATE ORDER BY `length`";
         lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
         return lessons;
     }
@@ -118,16 +118,27 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<SheduleReport> getLessonsSortedByType() {
         List<SheduleReport> lessons = new ArrayList<>();
-        String query = "SELECT lesson.id, `begin`, `end`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id ORDER BY `name`";
+        String query = "SELECT lesson.id, `begin`, `end`, `teacher_id`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id WHERE `begin`>=CURRENT_DATE ORDER BY `name`";
         lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
         return lessons;
     }
 
     @Override
-    public void joinGroup(Long clientId, Long groupId) {
-        Client client = clientRepository.getOne(clientId);
+    public List<SheduleReport> getLessonsSortedByTeacher() {
+        List<SheduleReport> lessons = new ArrayList<>();
+        String query = "SELECT lesson.id, `begin`, `end`, `teacher_id`, first_name, second_name, last_name, `length`, group_level, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on teacher_id=person.id WHERE `begin`>=CURRENT_DATE ORDER BY `second_name`";
+        lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
+        return lessons;
+    }
+
+    @Override
+    public void joinGroup(String email, Long groupId) {
+        Client client = clientRepository.findByEmail(email);
         Group group = groupRepository.getOne(groupId);
-        group.addClient(client);
+        client.setGroup(group);
+        if (!group.getClients().contains(client)) {
+            group.addClient(client);
+        }
     }
 
     @Override

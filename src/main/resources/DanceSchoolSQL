@@ -43,7 +43,7 @@ CREATE TABLE `dance` (
 USE `dance_school`;
 CREATE TABLE `group` (
                          `id` bigint auto_increment primary key,
-                         `group_level` bigint null,
+                         `group_level` varchar(255) null,
                          `dance_id` bigint null,
                          constraint `group_dance_constraint`
                              foreign key (`dance_id`) references `dance` (`id`)
@@ -77,4 +77,3 @@ CREATE TABLE `lesson` (
 insert into role(name) values ('ROLE_ADMIN');
 insert into role(name) values ('ROLE_CLIENT');
 insert into role(name) values ('ROLE_TEACHER');
-insert into role(name) values ('ROLE_USER');

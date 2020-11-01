@@ -1,19 +1,12 @@
 package com.example.danceSchool.service.impl;
 
-import com.example.danceSchool.dto.AdminDto;
-import com.example.danceSchool.dto.LessonDto;
-import com.example.danceSchool.dto.SheduleReport;
-import com.example.danceSchool.dto.SheduleRowMapper;
-import com.example.danceSchool.dto.TeacherDto;
-import com.example.danceSchool.entity.Admin;
-import com.example.danceSchool.entity.Lesson;
-import com.example.danceSchool.entity.Teacher;
+import com.example.danceSchool.converter.CustomEntityConverter;
+import com.example.danceSchool.dto.*;
+import com.example.danceSchool.entity.*;
 import com.example.danceSchool.exception.AdminException;
+import com.example.danceSchool.exception.PersonException;
 import com.example.danceSchool.exception.TeacherException;
-import com.example.danceSchool.repository.AdminRepository;
-import com.example.danceSchool.repository.LessonRepository;
-import com.example.danceSchool.repository.RoleRepository;
-import com.example.danceSchool.repository.TeacherRepository;
+import com.example.danceSchool.repository.*;
 import com.example.danceSchool.service.AdminService;
 import com.example.danceSchool.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +31,12 @@ public class AdminServiceImpl implements AdminService {
     private final LessonRepository lessonRepository;
     private final TeacherRepository teacherRepository;
     private final RoleRepository roleRepository;
+    private final PersonRepository personRepository;
+    private final ClientRepository clientRepository;
+    private final CustomEntityConverter customEntityConverter;
 
     @Autowired
-    public AdminServiceImpl(AdminRepository adminRepository, ConversionService conversionService, JdbcTemplate jdbcTemplate, EmailService emailService, LessonRepository lessonRepository, TeacherRepository teacherRepository, RoleRepository roleRepository) {
+    public AdminServiceImpl(AdminRepository adminRepository, ConversionService conversionService, JdbcTemplate jdbcTemplate, EmailService emailService, LessonRepository lessonRepository, TeacherRepository teacherRepository, RoleRepository roleRepository, PersonRepository personRepository, ClientRepository clientRepository, CustomEntityConverter customEntityConverter) {
         this.adminRepository = adminRepository;
         this.conversionService = conversionService;
         this.jdbcTemplate = jdbcTemplate;
@@ -48,11 +44,14 @@ public class AdminServiceImpl implements AdminService {
         this.lessonRepository = lessonRepository;
         this.teacherRepository = teacherRepository;
         this.roleRepository = roleRepository;
+        this.personRepository = personRepository;
+        this.clientRepository = clientRepository;
+        this.customEntityConverter = customEntityConverter;
     }
 
     @Override
     public AdminDto findAdminById(Long id) {
-        Admin admin = adminRepository.findById(id).orElseThrow(() -> new TeacherException("Admin is not found"));
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new AdminException("Admin is not found"));
         return conversionService.convert(admin, AdminDto.class);
     }
 
@@ -126,27 +125,64 @@ public class AdminServiceImpl implements AdminService {
         return lessons;
     }
 
-    public List<TeacherDto> getTeachersWithoutRole() {
-        List<TeacherDto> teachers = new ArrayList<>();
-        String query = "SELECT person.id, first_name, second_name, last_name, birthday, sex, e_mail, phone_number, name FROM person left outer join `role` on person.role_id = role.id WHERE `name` = 'ROLE_USER'";
-        teachers.addAll(jdbcTemplate.query(query, new Object[]{}, (resultSet, i) -> {
-            TeacherDto teacherDto = new TeacherDto();
-            teacherDto.setId(resultSet.getLong("id"));
-            teacherDto.setFirstName(resultSet.getString("first_name"));
-            teacherDto.setSecondName(resultSet.getString("second_name"));
-            teacherDto.setLastName(resultSet.getString("last_name"));
-            teacherDto.setSex(resultSet.getString("sex"));
-            teacherDto.setEmail(resultSet.getString("e_mail"));
-            teacherDto.setPhoneNumber(resultSet.getString("phone_number"));
-            teacherDto.setBirthday(resultSet.getDate("birthday"));
-            return teacherDto;
-        }));
-        return teachers;
+    @Override
+    public List<SheduleReport> getNewLessons() {
+        List<SheduleReport> lessons = new ArrayList<>();
+        String query = "SELECT lesson.id, `begin`, `end`, `length`, group_level, teacher_id, first_name, second_name, last_name, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on lesson.teacher_id=person.id WHERE status IS NULL";
+        lessons.addAll(jdbcTemplate.query(query, new SheduleRowMapper()));
+        return lessons;
     }
 
-    public TeacherDto giveTeacherRole(Long teacherId) {
-        Teacher teacher = teacherRepository.getOne(teacherId);
-        teacher.setRole(roleRepository.findByName("ROLE_TEACHER"));
-        return conversionService.convert(teacherRepository.save(teacher), TeacherDto.class);
+    public PersonDto setRole(Long personId, String role) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new PersonException("Person is not found"));
+        String roleAfter = role;
+        System.out.println(person.getRole().getName());
+        String roleBefore = person.getRole().getName();
+        if (roleBefore.equals("ROLE_CLIENT")) {
+            if (roleAfter.equals("ROLE_TEACHER")) {
+                Teacher teacher = (Teacher) customEntityConverter.convert(person, Teacher.class);
+                teacher.setRole(roleRepository.findByName(roleAfter));
+                teacherRepository.save(teacher);
+                clientRepository.delete((Client) person);
+                return conversionService.convert(teacher, PersonDto.class);
+            } else if (roleAfter.equals("ROLE_ADMIN")) {
+                Admin admin = conversionService.convert(person, Admin.class);
+                admin.setRole(roleRepository.findByName(roleAfter));
+                adminRepository.save(admin);
+                clientRepository.delete((Client) person);
+                return conversionService.convert(admin, PersonDto.class);
+            }
+        } else if (roleBefore.equals("ROLE_ADMIN")) {
+            if (roleAfter.equals("ROLE_CLIENT")) {
+                Client client = conversionService.convert(person, Client.class);
+                client.setRole(roleRepository.findByName(roleAfter));
+                clientRepository.save(client);
+                adminRepository.delete((Admin) person);
+                return conversionService.convert(client, PersonDto.class);
+            } else if (roleAfter.equals("ROLE_TEACHER")) {
+                Teacher teacher = conversionService.convert(person, Teacher.class);
+                teacher.setRole(roleRepository.findByName(roleAfter));
+                teacherRepository.save(teacher);
+                adminRepository.delete((Admin) person);
+                return conversionService.convert(teacher, PersonDto.class);
+            }
+        } else if (roleBefore.equals("ROLE_TEACHER")) {
+            if (roleAfter.equals("ROLE_CLIENT")) {
+                Client client = conversionService.convert(person, Client.class);
+                client.setRole(roleRepository.findByName(roleAfter));
+                clientRepository.save(client);
+                teacherRepository.delete((Teacher) person);
+                return conversionService.convert(client, PersonDto.class);
+            } else if (roleAfter.equals("ROLE_ADMIN")) {
+                Admin admin = conversionService.convert(person, Admin.class);
+                admin.setRole(roleRepository.findByName(roleAfter));
+                adminRepository.save(admin);
+                teacherRepository.delete((Teacher) person);
+                return conversionService.convert(admin, PersonDto.class);
+            }
+        }
+        return conversionService.convert(personRepository.save(person), PersonDto.class);
     }
 }
+
+

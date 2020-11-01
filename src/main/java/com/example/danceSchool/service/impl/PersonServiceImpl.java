@@ -38,16 +38,15 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDto updatePerson(PersonDto personDto, Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new PersonException("Person is not found"));
+    public PersonDto updatePerson(PersonDto personDto, String email) {
+        Person person = personRepository.findByEmail(email);
+        person.setFirstName(personDto.getFirstName());
         person.setSecondName(personDto.getSecondName());
         person.setLastName(personDto.getLastName());
         person.setBirthday(personDto.getBirthday());
         person.setSex(personDto.getSex());
         person.setEmail(personDto.getEmail());
         person.setPhoneNumber(personDto.getPhoneNumber());
-        person.setLogin(personDto.getLogin());
-        person.setPassword(personDto.getPassword());
         return conversionService.convert(personRepository.save(person), PersonDto.class);
     }
 

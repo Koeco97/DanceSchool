@@ -6,6 +6,7 @@ import com.example.danceSchool.dto.SheduleRowMapper;
 import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.entity.Lesson;
 import com.example.danceSchool.entity.Teacher;
+import com.example.danceSchool.exception.LessonException;
 import com.example.danceSchool.exception.TeacherException;
 import com.example.danceSchool.repository.DanceRepository;
 import com.example.danceSchool.repository.GroupRepository;
@@ -81,10 +82,19 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<SheduleReport> getLessons(long id) {
+    public List<SheduleReport> getLessons(String email) {
+        Teacher teacher = teacherRepository.findByEmail(email);
+        List<SheduleReport> lessons = new ArrayList<>();
+        String query = "SELECT lesson.id, `begin`, `end`, `length`, group_level, teacher_id, first_name, second_name, last_name, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on lesson.teacher_id=person.id WHERE status IS NULL AND teacher_id=?";
+        lessons.addAll(jdbcTemplate.query(query, new Object[]{teacher.getId()}, new SheduleRowMapper()));
+        return lessons;
+    }
+
+    public List<SheduleReport> getShedule(String email) {
+        Teacher teacher = teacherRepository.findByEmail(email);
         List<SheduleReport> lessons = new ArrayList<>();
         String query = "SELECT lesson.id, `begin`, `end`, `length`, group_level, teacher_id, first_name, second_name, last_name, status, `name` FROM lesson left outer join `group` on lesson.group_id = `group`.id left outer join dance d on `group`.dance_id = d.id left outer join person on lesson.teacher_id=person.id WHERE teacher_id=?";
-        lessons.addAll(jdbcTemplate.query(query, new Object[]{id}, new SheduleRowMapper()));
+        lessons.addAll(jdbcTemplate.query(query, new Object[]{teacher.getId()}, new SheduleRowMapper()));
         return lessons;
     }
 
@@ -104,6 +114,15 @@ public class TeacherServiceImpl implements TeacherService {
             lesson.setStatus("declined");
         }
         return conversionService.convert(lessonRepository.save(lesson), LessonDto.class);
+    }
+
+    @Override
+    public void setStatus(List<SheduleReport> lessons) {
+        for (SheduleReport row : lessons) {
+            Lesson lesson = lessonRepository.findById(row.getId()).orElseThrow(() -> new LessonException("Lesson is not found"));
+            lesson.setStatus(row.getStatus());
+            lessonRepository.save(lesson);
+        }
     }
 
 

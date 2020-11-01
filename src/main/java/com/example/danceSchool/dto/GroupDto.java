@@ -6,15 +6,15 @@ import java.util.Objects;
 
 public class GroupDto extends BaseDto {
     @JsonProperty(value = "group_level")
-    private int groupLevel;
+    private String groupLevel;
     @JsonProperty(value = "dance")
     private DanceDto dance;
 
-    public int getGroupLevel() {
+    public String getGroupLevel() {
         return groupLevel;
     }
 
-    public void setGroupLevel(int groupLevel) {
+    public void setGroupLevel(String groupLevel) {
         this.groupLevel = groupLevel;
     }
 

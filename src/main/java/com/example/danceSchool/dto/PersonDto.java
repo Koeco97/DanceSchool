@@ -1,6 +1,7 @@
 package com.example.danceSchool.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public class PersonDto extends BaseDto {
     @JsonProperty(value = "last_name")
     private String lastName;
     @JsonProperty(value = "birthday")
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @JsonProperty(value = "sex")
     private String sex;
@@ -22,9 +23,9 @@ public class PersonDto extends BaseDto {
     private String email;
     @JsonProperty(value = "phone_number")
     private String phoneNumber;
-    @JsonProperty(value = "login")
+    @JsonIgnore
     private String login;
-    @JsonProperty(value = "password")
+    @JsonIgnore
     private String password;
     @JsonProperty(value = "role")
     private String role;

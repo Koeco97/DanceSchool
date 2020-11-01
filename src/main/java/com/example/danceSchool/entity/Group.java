@@ -1,19 +1,13 @@
 package com.example.danceSchool.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "\"group\"")
 public class Group extends EntityBase {
     @Column(name = "group_level")
-    private int groupLevel;
+    private String groupLevel;
     @ManyToOne
     @JoinColumn(name = "dance_id")
     private Dance dance;
@@ -22,11 +16,11 @@ public class Group extends EntityBase {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
-    public int getGroupLevel() {
+    public String getGroupLevel() {
         return groupLevel;
     }
 
-    public void setGroupLevel(int groupLevel) {
+    public void setGroupLevel(String groupLevel) {
         this.groupLevel = groupLevel;
     }
 
@@ -57,4 +51,5 @@ public class Group extends EntityBase {
     public void addClient(Client client) {
         clients.add(client);
     }
+    
 }

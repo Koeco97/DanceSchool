@@ -17,9 +17,11 @@ public interface TeacherService {
 
     public List<TeacherDto> getAll();
 
-    public List<SheduleReport> getLessons(long id);
+    public List<SheduleReport> getLessons(String email);
 
     public LessonDto approve(long teacherId, long lessonId);
 
     public LessonDto decline(long teacherId, long lessonId);
+
+    public void setStatus(List<SheduleReport> lessons);
 }

@@ -4,16 +4,9 @@ import com.example.danceSchool.dto.PersonDto;
 import com.example.danceSchool.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -35,8 +28,10 @@ public class PersonController {
     }
 
     @GetMapping
-    public List<PersonDto> getAll() {
-        return personService.getAll();
+    public Map<String, List<PersonDto>> getAll() {
+        Map<String, List<PersonDto>> personMap = new HashMap<String, List<PersonDto>>();
+        personMap.put("persons", personService.getAll());
+        return personMap;
     }
 
     @GetMapping("/map")
@@ -49,9 +44,9 @@ public class PersonController {
         return personService.createPerson(personDto);
     }
 
-    @PutMapping(value = "/{id}")
-    public PersonDto updatePerson(@PathVariable("id") Long id, @RequestBody PersonDto personDto) {
-        return personService.updatePerson(personDto, id);
+    @PutMapping(value = "/{email}")
+    public PersonDto updatePerson(@PathVariable("email") String email, @RequestBody PersonDto personDto) {
+        return personService.updatePerson(personDto, email);
     }
 
     @DeleteMapping(value = "/{id}")

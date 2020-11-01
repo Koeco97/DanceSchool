@@ -3,7 +3,6 @@ package com.example.danceSchool.security;
 import com.example.danceSchool.dto.SignUpDto;
 import com.example.danceSchool.entity.Admin;
 import com.example.danceSchool.entity.Client;
-import com.example.danceSchool.entity.Teacher;
 import com.example.danceSchool.exception.PersonException;
 import com.example.danceSchool.repository.AdminRepository;
 import com.example.danceSchool.repository.ClientRepository;
@@ -57,13 +56,13 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @PostMapping(value = "/signUp/client")
+    @PostMapping(value = "/signUp")
     public ResponseEntity<?> signUpAsClient(@RequestBody SignUpDto signUpDto) {
         if (personRepository.count() == 0) {
             return createAdmin(signUpDto);
@@ -71,20 +70,6 @@ public class JwtAuthenticationController {
             Client client = conversionService.convert(signUpDto, Client.class);
             assert client != null;
             clientRepository.save(client);
-            return ResponseEntity.ok("");
-        } else {
-            throw new PersonException("user with this email already exists");
-        }
-    }
-
-    @PostMapping(value = "/signUp/teacher")
-    public ResponseEntity<?> signUpAsTeacher(@RequestBody SignUpDto signUpDto) {
-        if (personRepository.count() == 0) {
-            return createAdmin(signUpDto);
-        } else if (Objects.isNull(personRepository.findByEmail(signUpDto.getEmail()))) {
-            Teacher teacher = conversionService.convert(signUpDto, Teacher.class);
-            assert teacher != null;
-            teacherRepository.save(teacher);
             return ResponseEntity.ok("");
         } else {
             throw new PersonException("user with this email already exists");

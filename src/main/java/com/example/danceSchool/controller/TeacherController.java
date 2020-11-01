@@ -6,15 +6,7 @@ import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -61,9 +53,9 @@ public class TeacherController {
         teacherService.deleteTeacher(id);
     }
 
-    @GetMapping("/{id}/lessons")
-    public List<SheduleReport> getLessons(@PathVariable Long id) {
-        return teacherService.getLessons(id);
+    @GetMapping("/{email}/lessons")
+    public List<SheduleReport> getLessons(@PathVariable String email) {
+        return teacherService.getLessons(email);
     }
 
     @PutMapping("/{id}/approve/{lessonId}")
@@ -74,5 +66,10 @@ public class TeacherController {
     @PutMapping("/{id}/decline/{lessonId}")
     public LessonDto decline(@PathVariable("id") Long id, @PathVariable("lessonId") Long lessonId) {
         return teacherService.decline(id, lessonId);
+    }
+
+    @PutMapping("/lessons/status")
+    public void setStatus(@RequestBody List<SheduleReport> sheduleReport) {
+        teacherService.setStatus(sheduleReport);
     }
 }

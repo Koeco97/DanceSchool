@@ -9,7 +9,7 @@ public interface PersonService {
 
     PersonDto createPerson(PersonDto personDto);
 
-    PersonDto updatePerson(PersonDto personDto, Long id);
+    PersonDto updatePerson(PersonDto personDto, String email);
 
     void deletePerson(Long id);
 

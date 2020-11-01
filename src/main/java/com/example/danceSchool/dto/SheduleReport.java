@@ -9,18 +9,18 @@ public class SheduleReport {
 
     @JsonProperty(value = "id")
     Long id;
-
-    ;
     @JsonProperty(value = "begin")
-    @JsonFormat(pattern = "dd.MM.yyyy hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Moscow")
     private Date begin;
     @JsonProperty(value = "end")
-    @JsonFormat(pattern = "dd.MM.yyyy hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Moscow")
     private Date end;
     @JsonProperty(value = "length")
     private int length;
-    @JsonProperty(value = "groupLevel")
-    private int groupLevel;
+    @JsonProperty(value = "group_level")
+    private String groupLevel;
+    @JsonProperty(value = "teacher_id")
+    private Long teacherId;
     @JsonProperty(value = "teacher")
     private String teacher;
     @JsonProperty(value = "dance")
@@ -47,8 +47,8 @@ public class SheduleReport {
         this.length = length;
     }
 
-    public void setGroupLevel(int groupLevel) {
-        this.groupLevel = groupLevel;
+    public Long getId() {
+        return id;
     }
 
     public void setTeacher(String teacher) {
@@ -61,5 +61,45 @@ public class SheduleReport {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getBegin() {
+        return begin;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public String getGroupLevel() {
+        return groupLevel;
+    }
+
+    public void setGroupLevel(String groupLevel) {
+        this.groupLevel = groupLevel;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public String getDance() {
+        return dance;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 }

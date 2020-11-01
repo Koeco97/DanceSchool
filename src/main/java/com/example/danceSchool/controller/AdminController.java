@@ -3,21 +3,12 @@ package com.example.danceSchool.controller;
 import com.example.danceSchool.dto.AdminDto;
 import com.example.danceSchool.dto.LessonDto;
 import com.example.danceSchool.dto.SheduleReport;
-import com.example.danceSchool.dto.TeacherDto;
 import com.example.danceSchool.service.AdminService;
 import com.example.danceSchool.service.LessonService;
 import com.example.danceSchool.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -89,6 +80,11 @@ public class AdminController {
         return lessonService.createLesson(lessonDto);
     }
 
+    @GetMapping("/lessons/new")
+    public List<SheduleReport> getNewLessons() {
+        return adminService.getNewLessons();
+    }
+
     @PutMapping(value = "/lessons/{id}")
     public LessonDto updateLesson(@PathVariable("id") Long id, @RequestBody LessonDto lessonDto) {
         return lessonService.updateLesson(lessonDto, id);
@@ -109,14 +105,10 @@ public class AdminController {
         return adminService.redirect(id, teacherId);
     }
 
-    @GetMapping("/teachers/new")
-    public List<TeacherDto> getNewTeachers() {
-        return adminService.getTeachersWithoutRole();
-    }
-
-    @PutMapping(value = "/teachers/{id}")
-    public void giveTeacherRole(@PathVariable("id") Long id) {
-        adminService.giveTeacherRole(id);
+    @PutMapping(value = "/{id}/{role}")
+    public void setRole(@PathVariable("id") Long id,
+                        @PathVariable("role") String role) {
+        adminService.setRole(id, role);
     }
 
     @DeleteMapping(value = "/teachers/{id}")

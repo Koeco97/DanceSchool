@@ -25,9 +25,11 @@ public interface ClientService {
 
     public List<SheduleReport> getLessonsSortedByType();
 
-    public void joinGroup(Long clientId, Long groupId);
+    public void joinGroup(String email, Long groupId);
 
     public Client findByLogin(String login);
 
     public Client findByLoginAndPassword(String login, String password);
+
+    public List<SheduleReport> getLessonsSortedByTeacher();
 }

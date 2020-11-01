@@ -11,10 +11,11 @@ public class SheduleRowMapper implements RowMapper<SheduleReport> {
     public SheduleReport mapRow(ResultSet resultSet, int i) throws SQLException {
         SheduleReport sheduleReport = new SheduleReport();
         sheduleReport.setId(resultSet.getLong("id"));
-        sheduleReport.setBegin(resultSet.getDate("begin"));
-        sheduleReport.setEnd(resultSet.getDate("end"));
+        sheduleReport.setBegin(resultSet.getTimestamp("begin"));
+        sheduleReport.setEnd(resultSet.getTimestamp("end"));
         sheduleReport.setLength(resultSet.getInt("length"));
-        sheduleReport.setGroupLevel(resultSet.getInt("group_level"));
+        sheduleReport.setGroupLevel(resultSet.getString("group_level"));
+        sheduleReport.setTeacherId(resultSet.getLong("teacher_id"));
         String teacherSecondName = resultSet.getString("second_name");
         String teacherFirstName = resultSet.getString("first_name");
         String teacherLastName = resultSet.getString("last_name");
